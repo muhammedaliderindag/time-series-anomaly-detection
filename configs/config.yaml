@@ -1,0 +1,39 @@
+# ============================================
+# Time Series Anomaly Detection - Configuration
+# ============================================
+
+# --- Training Hyperparameters ---
+batch_size: 32
+max_epoch: 50
+
+# --- Early Stopping ---
+early_stopping:
+  patience: 5
+  monitor: "val_loss"
+
+# --- Reproducibility ---
+random_seeds: [42, 123, 2026, 7, 999]
+
+# --- Paths ---
+paths:
+  data_dir: "./data"
+  log_dir: "./logs"
+  model_dir: "./models"
+  results_dir: "./results"
+
+# --- Model ---
+model:
+  name: "autoencoder"
+  input_dim: 1
+  hidden_dim: 64
+  latent_dim: 32
+  num_layers: 2
+  dropout: 0.2
+
+# --- Data ---
+data:
+  sequence_length: 100
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  normalization: "minmax"
