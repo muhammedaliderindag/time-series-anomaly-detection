@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  anomaly-detection:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ts-anomaly-detection
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python main.py
