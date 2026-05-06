@@ -12,7 +12,7 @@ venv/
 logs/*.log
 logs/*.json
 logs/*.csv
-data/
+/data/
 *.pt
 *.pth
 *.h5
