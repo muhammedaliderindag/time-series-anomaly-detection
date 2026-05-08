@@ -11,6 +11,7 @@ from typing import Tuple, Union
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.decomposition import PCA
 
 
 class DataPreprocessor:
@@ -70,3 +71,55 @@ class DataPreprocessor:
         """
         with open(filepath, "rb") as f:
             self.scaler = pickle.load(f)
+
+
+class PCADimensionalityReducer:
+    """Reduces multidimensional time series features down to a target dimension (e.g., 1D for Automata)."""
+
+    def __init__(self, n_components: int = 1, artifact_dir: str = "./models/artifacts"):
+        """
+        Args:
+            n_components: Number of principal components.
+            artifact_dir: Directory where the fitted PCA object is saved.
+        """
+        self.n_components = n_components
+        self.artifact_dir = artifact_dir
+        os.makedirs(self.artifact_dir, exist_ok=True)
+        self.pca = PCA(n_components=self.n_components)
+
+    def fit(self, train_df: pd.DataFrame) -> None:
+        """
+        Fits PCA on the training set only.
+        """
+        self.pca.fit(train_df)
+
+    def transform(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Transforms the dataset down to PCA components.
+        """
+        reduced_array = self.pca.transform(df)
+        cols = [f"pc_{i+1}" for i in range(self.n_components)]
+        return pd.DataFrame(reduced_array, columns=cols, index=df.index)
+
+    def fit_transform(self, train_df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Fits on train_df and transforms it.
+        """
+        self.fit(train_df)
+        return self.transform(train_df)
+
+    def save_pca(self, filename: str = "pca.pkl") -> str:
+        """
+        Saves the fitted PCA object to the artifact directory.
+        """
+        filepath = os.path.join(self.artifact_dir, filename)
+        with open(filepath, "wb") as f:
+            pickle.dump(self.pca, f)
+        return filepath
+
+    def load_pca(self, filepath: str) -> None:
+        """
+        Loads a pre-fitted PCA object.
+        """
+        with open(filepath, "rb") as f:
+            self.pca = pickle.load(f)
