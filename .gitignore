@@ -17,3 +17,5 @@ logs/*.csv
 *.pth
 *.h5
 .DS_Store
+models/
+
