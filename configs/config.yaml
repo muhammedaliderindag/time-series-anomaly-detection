@@ -37,3 +37,11 @@ data:
   val_ratio: 0.1
   test_ratio: 0.1
   normalization: "minmax"
+
+# --- Automata Model Settings ---
+automata:
+  paa_segment_size: 5       # number of time steps averaged into one PAA segment
+  alphabet_size: 4          # number of symbols in SAX alphabet
+  window_size: 3            # length of the sliding window of SAX symbols defining a state
+  anomaly_threshold: 0.05   # transition probability threshold for anomalies
+
