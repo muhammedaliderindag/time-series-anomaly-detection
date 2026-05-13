@@ -4,12 +4,33 @@ Probabilistic Automaton Core Model
 Learns and represents state transitions as a probabilistic matrix.
 State transition calculation: P(S_i -> S_j) = Count(S_i -> S_j) / Count(S_i -> *)
 Only trained on training data to prevent leakage. Supports persistence.
+Handles unseen states during inference using Levenshtein distance mapping.
 """
 
 import os
 import json
 from collections import defaultdict
-from typing import Dict, List, Set, Optional
+from typing import Dict, List, Set, Tuple, Optional
+
+
+def levenshtein_distance(s1: str, s2: str) -> int:
+    """Computes the Levenshtein (edit) distance between two strings."""
+    if len(s1) < len(s2):
+        return levenshtein_distance(s2, s1)
+    if len(s2) == 0:
+        return len(s1)
+
+    previous_row = list(range(len(s2) + 1))
+    for i, c1 in enumerate(s1):
+        current_row = [i + 1]
+        for j, c2 in enumerate(s2):
+            insertions = previous_row[j + 1] + 1
+            deletions = current_row[j] + 1
+            substitutions = previous_row[j] + (c1 != c2)
+            current_row.append(min(insertions, deletions, substitutions))
+        previous_row = current_row
+
+    return previous_row[-1]
 
 
 class ProbabilisticAutomaton:
@@ -43,6 +64,7 @@ class ProbabilisticAutomaton:
         counts = defaultdict(lambda: defaultdict(int))
         totals = defaultdict(int)
 
+        self.states.clear()
         for i in range(len(patterns) - 1):
             s_from = patterns[i]
             s_to = patterns[i + 1]
@@ -59,15 +81,78 @@ class ProbabilisticAutomaton:
             for s_to, count in targets.items():
                 self.transition_matrix[s_from][s_to] = count / totals[s_from]
 
+    def find_nearest_state(self, unseen_pattern: str) -> Optional[str]:
+        """
+        Finds the nearest known state in self.states using Levenshtein distance.
+        Deterministic tie-breaking using alphabetical order.
+        """
+        if not self.states:
+            return None
+        if unseen_pattern in self.states:
+            return unseen_pattern
+
+        best_state = None
+        min_dist = float("inf")
+
+        for state in sorted(self.states):
+            dist = levenshtein_distance(unseen_pattern, state)
+            if dist < min_dist:
+                min_dist = dist
+                best_state = state
+
+        return best_state
+
     def get_transition_probability(self, s_from: str, s_to: str) -> float:
         """
         Returns the transition probability from s_from to s_to.
         If s_from is known but no transition to s_to exists, returns 0.0.
-        If s_from is unknown, returns 0.0 (or needs unseen handling).
+        If s_from is unknown, returns 0.0.
         """
         if s_from in self.transition_matrix:
             return self.transition_matrix[s_from].get(s_to, 0.0)
         return 0.0
+
+    def evaluate_transition(self, s_from: str, s_to: str) -> Dict[str, any]:
+        """
+        Evaluates a transition between two patterns. If either is unseen,
+        maps them to the nearest known states using Levenshtein distance.
+
+        Returns:
+            Dictionary containing evaluation details:
+            {
+                "s_from_status": "seen" | "unseen",
+                "s_from_mapped": str | None,
+                "s_to_status": "seen" | "unseen",
+                "s_to_mapped": str | None,
+                "probability": float
+            }
+        """
+        s_from_status = "seen" if s_from in self.states else "unseen"
+        s_to_status = "seen" if s_to in self.states else "unseen"
+
+        s_from_mapped = None
+        s_to_mapped = None
+
+        resolved_from = s_from
+        resolved_to = s_to
+
+        if s_from_status == "unseen":
+            s_from_mapped = self.find_nearest_state(s_from)
+            resolved_from = s_from_mapped if s_from_mapped is not None else s_from
+
+        if s_to_status == "unseen":
+            s_to_mapped = self.find_nearest_state(s_to)
+            resolved_to = s_to_mapped if s_to_mapped is not None else s_to
+
+        prob = self.get_transition_probability(resolved_from, resolved_to)
+
+        return {
+            "s_from_status": s_from_status,
+            "s_from_mapped": s_from_mapped,
+            "s_to_status": s_to_status,
+            "s_to_mapped": s_to_mapped,
+            "probability": prob
+        }
 
     def save(self, filename: str = "automaton_model.json") -> str:
         """
