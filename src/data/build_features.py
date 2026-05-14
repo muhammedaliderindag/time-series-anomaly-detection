@@ -31,7 +31,7 @@ def create_dummy_dataset(filepath: str, num_rows: int = 1000, num_features: int 
     dates = pd.date_range(start="2026-05-01", periods=num_rows, freq="min")
 
     data = {
-        "timestamp": dates if "batadal" not in filepath else dates,
+        "timestamp": dates,
     }
     if "batadal" in filepath.lower():
         data = {"DATETIME": dates}
@@ -39,6 +39,14 @@ def create_dummy_dataset(filepath: str, num_rows: int = 1000, num_features: int 
     # Add numeric features
     for i in range(num_features):
         data[f"sensor_{i}"] = np.sin(np.linspace(0, 50, num_rows)) + np.random.normal(0, 0.1, num_rows)
+
+    # Add dummy label column with ~5% anomalies
+    labels = np.random.choice([0, 1], size=num_rows, p=[0.95, 0.05])
+    if "batadal" in filepath.lower():
+        data["ATT_FLAG"] = labels
+    else:
+        # Use string formats as found in raw datasets
+        data["Normal/Attack"] = ["Normal" if l == 0 else "Attack" for l in labels]
 
     df = pd.DataFrame(data)
     df.to_csv(filepath, index=False)
@@ -55,20 +63,22 @@ def preprocess_dataset(
     """Preprocess a single dataset."""
     logger.info(f"Starting preprocessing pipeline for {dataset_name.upper()}")
 
-    # 1. Load dataset
+    # 1. Load dataset (features, labels, timestamps)
     logger.info(f"Loading raw data for {dataset_name}...")
     load_fn = getattr(loader, f"load_{dataset_name}")
-    features_df, times_df = load_fn()
+    features_df, labels_df, times_df = load_fn()
 
-    logger.info(f"Loaded {dataset_name} with features shape {features_df.shape} and times shape {times_df.shape}")
+    logger.info(f"Loaded {dataset_name} with features shape {features_df.shape}, "
+                f"labels shape {labels_df.shape}, and times shape {times_df.shape}")
 
     # 2. Split dataset chronologically
     logger.info(f"Splitting {dataset_name} chronologically...")
     split_fn = getattr(splitter, f"split_{dataset_name}")
     (
         train_feat, val_feat, test_feat,
+        train_lbl, val_lbl, test_lbl,
         train_time, val_time, test_time
-    ) = split_fn(features_df, times_df)
+    ) = split_fn(features_df, labels_df, times_df)
 
     logger.info(f"Split results: Train={train_feat.shape}, Val={val_feat.shape}, Test={test_feat.shape}")
 
@@ -118,6 +128,11 @@ def preprocess_dataset(
     val_feat_pca.to_csv(os.path.join(dataset_out_dir, "val_pca.csv"), index=False)
     test_feat_pca.to_csv(os.path.join(dataset_out_dir, "test_pca.csv"), index=False)
 
+    # Save labels
+    train_lbl.to_csv(os.path.join(dataset_out_dir, "train_labels.csv"), index=False)
+    val_lbl.to_csv(os.path.join(dataset_out_dir, "val_labels.csv"), index=False)
+    test_lbl.to_csv(os.path.join(dataset_out_dir, "test_labels.csv"), index=False)
+
     # Save timestamps
     train_time.to_csv(os.path.join(dataset_out_dir, "train_time.csv"), index=False)
     val_time.to_csv(os.path.join(dataset_out_dir, "val_time.csv"), index=False)
@@ -126,13 +141,9 @@ def preprocess_dataset(
     logger.info(f"Finished preprocessing pipeline for {dataset_name.upper()}\n" + "-"*40)
 
 
-def main():
-    parser = argparse.ArgumentParser(description="End-to-End Preprocessing Pipeline")
-    parser.add_argument("--config", type=str, default="configs/config.yaml", help="Path to config file")
-    args = parser.parse_args()
-
+def run_pipeline(config_path: str = "configs/config.yaml") -> None:
     # Load configuration
-    cfg = ConfigParser(args.config)
+    cfg = ConfigParser(config_path)
 
     # Setup logger
     logger = ExperimentLogger(cfg.config, experiment_name="data_preprocessing")
@@ -145,13 +156,24 @@ def main():
     datasets = ["swat", "wadi", "batadal"]
     for ds in datasets:
         ds_path = os.path.join(data_dir, f"{ds}.csv")
+        # If dummy exists, delete it so we regenerate it with label column
+        if os.path.exists(ds_path):
+            # Check if it has labels. If not, delete it
+            try:
+                temp_df = pd.read_csv(ds_path, nrows=5)
+                # If there are no labels, delete
+                if not any(col in temp_df.columns for col in ["Normal/Attack", "Attack", "ATT_FLAG", "label"]):
+                    print(f"Old dummy {ds}.csv found without labels. Regerating...")
+                    os.remove(ds_path)
+            except Exception:
+                os.remove(ds_path)
+
         if not os.path.exists(ds_path):
             logger.warning(f"Raw dataset {ds} not found at {ds_path}. Creating dummy data...")
             create_dummy_dataset(ds_path)
 
     # Initialize data tools
     loader = DataLoader(data_dir)
-    # Get ratios from config, with fallback
     train_ratio = cfg.get("data.train_ratio", 0.6)
     val_ratio = cfg.get("data.val_ratio", 0.2)
     test_ratio = cfg.get("data.test_ratio", 0.2)
@@ -172,4 +194,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="End-to-End Preprocessing Pipeline")
+    parser.add_argument("--config", type=str, default="configs/config.yaml", help="Path to config file")
+    args = parser.parse_args()
+    run_pipeline(args.config)
