@@ -8,9 +8,7 @@ and saving of processed datasets for SWAT, WADI, and BATADAL.
 import os
 import sys
 import argparse
-import numpy as np
 import pandas as pd
-from typing import Tuple
 
 # Add the project root to sys.path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -20,36 +18,7 @@ from src.utils.logger import ExperimentLogger
 from src.data.data_loader import DataLoader
 from src.data.splitter import TemporalSplitter
 from src.data.preprocessor import DataPreprocessor, PCADimensionalityReducer
-
-
-def create_dummy_dataset(filepath: str, num_rows: int = 1000, num_features: int = 10) -> None:
-    """Helper to create dummy CSV files for SWAT, WADI, and BATADAL if they don't exist."""
-    print(f"Creating dummy dataset at {filepath}...")
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-
-    # Generate dummy datetime index
-    dates = pd.date_range(start="2026-05-01", periods=num_rows, freq="min")
-
-    data = {
-        "timestamp": dates,
-    }
-    if "batadal" in filepath.lower():
-        data = {"DATETIME": dates}
-
-    # Add numeric features
-    for i in range(num_features):
-        data[f"sensor_{i}"] = np.sin(np.linspace(0, 50, num_rows)) + np.random.normal(0, 0.1, num_rows)
-
-    # Add dummy label column with ~5% anomalies
-    labels = np.random.choice([0, 1], size=num_rows, p=[0.95, 0.05])
-    if "batadal" in filepath.lower():
-        data["ATT_FLAG"] = labels
-    else:
-        # Use string formats as found in raw datasets
-        data["Normal/Attack"] = ["Normal" if l == 0 else "Attack" for l in labels]
-
-    df = pd.DataFrame(data)
-    df.to_csv(filepath, index=False)
+from src.data.dummy_generator import create_dummy_dataset
 
 
 def preprocess_dataset(
@@ -120,6 +89,7 @@ def preprocess_dataset(
     test_feat_scaled.to_csv(os.path.join(dataset_out_dir, "test_scaled.csv"), index=False)
 
     # Save PCA features (1D) (Numpy & CSV)
+    import numpy as np
     np.save(os.path.join(dataset_out_dir, "train_pca.npy"), train_feat_pca.values)
     np.save(os.path.join(dataset_out_dir, "val_pca.npy"), val_feat_pca.values)
     np.save(os.path.join(dataset_out_dir, "test_pca.npy"), test_feat_pca.values)
@@ -156,12 +126,10 @@ def run_pipeline(config_path: str = "configs/config.yaml") -> None:
     datasets = ["swat", "wadi", "batadal"]
     for ds in datasets:
         ds_path = os.path.join(data_dir, f"{ds}.csv")
-        # If dummy exists, delete it so we regenerate it with label column
+        # If dummy exists, delete it so we regenerate it with label column if old
         if os.path.exists(ds_path):
-            # Check if it has labels. If not, delete it
             try:
                 temp_df = pd.read_csv(ds_path, nrows=5)
-                # If there are no labels, delete
                 if not any(col in temp_df.columns for col in ["Normal/Attack", "Attack", "ATT_FLAG", "label"]):
                     print(f"Old dummy {ds}.csv found without labels. Regerating...")
                     os.remove(ds_path)
