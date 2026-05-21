@@ -101,3 +101,49 @@ class Visualizer:
         plt.savefig(filepath, bbox_inches='tight', dpi=300)
         plt.close()
         print(f"Saved Parameter Sensitivity graph to {filepath}")
+
+    def plot_automata_state_diagram(self, transition_matrix: dict, filename: str):
+        import networkx as nx
+        G = nx.DiGraph()
+        
+        states = list(transition_matrix.keys())
+        if len(states) > 20:
+            states = states[:20]
+            
+        for s1 in states:
+            if s1 in transition_matrix:
+                for s2, prob in transition_matrix[s1].items():
+                    if s2 in states and prob > 0.05: # only draw significant edges
+                        G.add_edge(s1, s2, weight=prob)
+                        
+        plt.figure(figsize=(14, 12))
+        pos = nx.spring_layout(G, seed=42, k=0.5)
+        
+        # Draw nodes
+        nx.draw_networkx_nodes(G, pos, node_color=self.colors['cyan'], 
+                               node_size=2000, alpha=0.8, edgecolors='white')
+                               
+        # Draw edges
+        edges = G.edges()
+        weights = [G[u][v]['weight'] * 5 for u, v in edges] # scale thickness
+        nx.draw_networkx_edges(G, pos, edgelist=edges, width=weights, 
+                               edge_color=self.colors['magenta'], 
+                               arrowsize=20, alpha=0.6, connectionstyle='arc3,rad=0.1')
+                               
+        # Draw labels
+        nx.draw_networkx_labels(G, pos, font_size=10, font_family="sans-serif", 
+                                font_color="black", font_weight="bold")
+                                
+        # Draw edge labels (probabilities)
+        edge_labels = {(u, v): f"{G[u][v]['weight']:.2f}" for u, v in edges}
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, 
+                                     font_color=self.colors['lime'], font_size=8)
+                                     
+        plt.title('Automata State Diagram (Top 20 States)', color=self.colors['yellow'], pad=20)
+        plt.axis('off')
+        
+        filepath = os.path.join(self.output_dir, filename)
+        plt.savefig(filepath, bbox_inches='tight', dpi=300, facecolor='#121212')
+        plt.close()
+        print(f"Saved Automata State Diagram to {filepath}")
+
