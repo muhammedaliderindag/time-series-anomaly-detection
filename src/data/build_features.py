@@ -2,13 +2,14 @@
 Pipeline Orchestration Script
 ==============================
 Orchestrates the loading, splitting, scaling, PCA reduction,
-and saving of processed datasets for SWAT, WADI, and BATADAL.
+and saving of processed datasets for SKAB and BATADAL.
 """
 
 import os
 import sys
 import argparse
 import pandas as pd
+import numpy as np
 
 # Add the project root to sys.path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -16,150 +17,105 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspa
 from src.utils.config_parser import ConfigParser
 from src.utils.logger import ExperimentLogger
 from src.data.data_loader import DataLoader
-from src.data.splitter import TemporalSplitter
+from src.data.splitter import DatasetSplitter
 from src.data.preprocessor import DataPreprocessor, PCADimensionalityReducer
-from src.data.dummy_generator import create_dummy_dataset
+from src.data.dummy_generator import create_skab_dummy, create_batadal_dummy
 
-
-def preprocess_dataset(
-    dataset_name: str,
-    loader: DataLoader,
-    splitter: TemporalSplitter,
-    config: ConfigParser,
-    logger: ExperimentLogger,
-    processed_dir: str
-) -> None:
-    """Preprocess a single dataset."""
-    logger.info(f"Starting preprocessing pipeline for {dataset_name.upper()}")
-
-    # 1. Load dataset (features, labels, timestamps)
-    logger.info(f"Loading raw data for {dataset_name}...")
-    load_fn = getattr(loader, f"load_{dataset_name}")
-    features_df, labels_df, times_df = load_fn()
-
-    logger.info(f"Loaded {dataset_name} with features shape {features_df.shape}, "
-                f"labels shape {labels_df.shape}, and times shape {times_df.shape}")
-
-    # 2. Split dataset chronologically
-    logger.info(f"Splitting {dataset_name} chronologically...")
-    split_fn = getattr(splitter, f"split_{dataset_name}")
-    (
-        train_feat, val_feat, test_feat,
-        train_lbl, val_lbl, test_lbl,
-        train_time, val_time, test_time
-    ) = split_fn(features_df, labels_df, times_df)
-
-    logger.info(f"Split results: Train={train_feat.shape}, Val={val_feat.shape}, Test={test_feat.shape}")
-
+def preprocess_and_save(
+    fold_dir: str,
+    train_feat: pd.DataFrame, val_feat: pd.DataFrame, test_feat: pd.DataFrame,
+    train_lbl: pd.DataFrame, val_lbl: pd.DataFrame, test_lbl: pd.DataFrame,
+    train_time: pd.DataFrame, val_time: pd.DataFrame, test_time: pd.DataFrame,
+    config: ConfigParser, logger: ExperimentLogger, dataset_name: str
+):
+    os.makedirs(fold_dir, exist_ok=True)
+    
     # 3. Scaling (Zero Leakage: Fit on Train ONLY)
-    logger.info("Initializing scaling...")
     method = config.get("data.normalization", "minmax")
-    preprocessor = DataPreprocessor(method=method, artifact_dir=config.get("paths.model_dir") + "/artifacts")
-
-    logger.info(f"Fitting scaler on Train set...")
+    preprocessor = DataPreprocessor(method=method, artifact_dir=fold_dir)
     train_feat_scaled = preprocessor.fit_transform(train_feat)
     val_feat_scaled = preprocessor.transform(val_feat)
     test_feat_scaled = preprocessor.transform(test_feat)
-
-    # Save fitted scaler
-    scaler_path = preprocessor.save_scaler(f"{dataset_name}_scaler.pkl")
-    logger.info(f"Fitted scaler saved to {scaler_path}")
+    preprocessor.save_scaler(f"{dataset_name}_scaler.pkl")
 
     # 4. PCA (Zero Leakage: Fit on Train ONLY)
-    logger.info("Initializing PCA dimensionality reduction (1D)...")
-    pca_reducer = PCADimensionalityReducer(n_components=1, artifact_dir=config.get("paths.model_dir") + "/artifacts")
-
-    logger.info("Fitting PCA on Train set...")
+    pca_reducer = PCADimensionalityReducer(n_components=1, artifact_dir=fold_dir)
     train_feat_pca = pca_reducer.fit_transform(train_feat_scaled)
     val_feat_pca = pca_reducer.transform(val_feat_scaled)
     test_feat_pca = pca_reducer.transform(test_feat_scaled)
+    pca_reducer.save_pca(f"{dataset_name}_pca.pkl")
 
-    # Save fitted PCA
-    pca_path = pca_reducer.save_pca(f"{dataset_name}_pca.pkl")
-    logger.info(f"Fitted PCA saved to {pca_path}")
-
-    # 5. Save Processed Datasets
-    logger.info(f"Saving processed data to {processed_dir}...")
-    dataset_out_dir = os.path.join(processed_dir, dataset_name)
-    os.makedirs(dataset_out_dir, exist_ok=True)
-
-    # Save scaling features (CSV)
-    train_feat_scaled.to_csv(os.path.join(dataset_out_dir, "train_scaled.csv"), index=False)
-    val_feat_scaled.to_csv(os.path.join(dataset_out_dir, "val_scaled.csv"), index=False)
-    test_feat_scaled.to_csv(os.path.join(dataset_out_dir, "test_scaled.csv"), index=False)
-
-    # Save PCA features (1D) (Numpy & CSV)
-    import numpy as np
-    np.save(os.path.join(dataset_out_dir, "train_pca.npy"), train_feat_pca.values)
-    np.save(os.path.join(dataset_out_dir, "val_pca.npy"), val_feat_pca.values)
-    np.save(os.path.join(dataset_out_dir, "test_pca.npy"), test_feat_pca.values)
-
-    train_feat_pca.to_csv(os.path.join(dataset_out_dir, "train_pca.csv"), index=False)
-    val_feat_pca.to_csv(os.path.join(dataset_out_dir, "val_pca.csv"), index=False)
-    test_feat_pca.to_csv(os.path.join(dataset_out_dir, "test_pca.csv"), index=False)
+    # Save PCA features (1D) (Numpy)
+    np.save(os.path.join(fold_dir, "train_pca.npy"), train_feat_pca.values)
+    np.save(os.path.join(fold_dir, "val_pca.npy"), val_feat_pca.values)
+    np.save(os.path.join(fold_dir, "test_pca.npy"), test_feat_pca.values)
 
     # Save labels
-    train_lbl.to_csv(os.path.join(dataset_out_dir, "train_labels.csv"), index=False)
-    val_lbl.to_csv(os.path.join(dataset_out_dir, "val_labels.csv"), index=False)
-    test_lbl.to_csv(os.path.join(dataset_out_dir, "test_labels.csv"), index=False)
+    if not train_lbl.empty: train_lbl.to_csv(os.path.join(fold_dir, "train_labels.csv"), index=False)
+    if not val_lbl.empty: val_lbl.to_csv(os.path.join(fold_dir, "val_labels.csv"), index=False)
+    if not test_lbl.empty: test_lbl.to_csv(os.path.join(fold_dir, "test_labels.csv"), index=False)
 
     # Save timestamps
-    train_time.to_csv(os.path.join(dataset_out_dir, "train_time.csv"), index=False)
-    val_time.to_csv(os.path.join(dataset_out_dir, "val_time.csv"), index=False)
-    test_time.to_csv(os.path.join(dataset_out_dir, "test_time.csv"), index=False)
+    if not train_time.empty: train_time.to_csv(os.path.join(fold_dir, "train_time.csv"), index=False)
+    if not val_time.empty: val_time.to_csv(os.path.join(fold_dir, "val_time.csv"), index=False)
+    if not test_time.empty: test_time.to_csv(os.path.join(fold_dir, "test_time.csv"), index=False)
 
-    logger.info(f"Finished preprocessing pipeline for {dataset_name.upper()}\n" + "-"*40)
+def preprocess_skab(loader: DataLoader, splitter: DatasetSplitter, config: ConfigParser, logger: ExperimentLogger, processed_dir: str):
+    logger.info("Starting preprocessing pipeline for SKAB (K-Fold)")
+    features_df, labels_df, meta_df = loader.load_skab()
+    folds = splitter.get_skab_folds(features_df, labels_df, meta_df, n_splits=5)
+    
+    dataset_out_dir = os.path.join(processed_dir, "skab")
+    
+    for i, fold_data in enumerate(folds):
+        logger.info(f"Processing SKAB Fold {i}...")
+        fold_dir = os.path.join(dataset_out_dir, f"fold_{i}")
+        t_f, t_l, t_m = fold_data["train"]
+        v_f, v_l, v_m = fold_data["val"]
+        te_f, te_l, te_m = fold_data["test"]
+        preprocess_and_save(fold_dir, t_f, v_f, te_f, t_l, v_l, te_l, t_m, v_m, te_m, config, logger, "skab")
 
+def preprocess_batadal(loader: DataLoader, splitter: DatasetSplitter, config: ConfigParser, logger: ExperimentLogger, processed_dir: str):
+    logger.info("Starting preprocessing pipeline for BATADAL")
+    features_df, labels_df, times_df = loader.load_batadal()
+    (t_f, v_f, te_f, t_l, v_l, te_l, t_m, v_m, te_m) = splitter.split_batadal(features_df, labels_df, times_df)
+    
+    dataset_out_dir = os.path.join(processed_dir, "batadal")
+    preprocess_and_save(dataset_out_dir, t_f, v_f, te_f, t_l, v_l, te_l, t_m, v_m, te_m, config, logger, "batadal")
 
 def run_pipeline(config_path: str = "configs/config.yaml") -> None:
-    # Load configuration
     cfg = ConfigParser(config_path)
-
-    # Setup logger
     logger = ExperimentLogger(cfg.config, experiment_name="data_preprocessing")
-
-    data_dir = cfg.get("paths.data_dir")
+    data_dir = cfg.get("paths.data_dir", "data")
     processed_dir = os.path.join(data_dir, "processed")
     os.makedirs(processed_dir, exist_ok=True)
 
-    # Verify if raw datasets exist, otherwise generate dummy data for demonstration/sanity check
-    datasets = ["swat", "wadi", "batadal"]
-    for ds in datasets:
-        ds_path = os.path.join(data_dir, f"{ds}.csv")
-        # If dummy exists, delete it so we regenerate it with label column if old
-        if os.path.exists(ds_path):
-            try:
-                temp_df = pd.read_csv(ds_path, nrows=5)
-                if not any(col in temp_df.columns for col in ["Normal/Attack", "Attack", "ATT_FLAG", "label"]):
-                    print(f"Old dummy {ds}.csv found without labels. Regerating...")
-                    os.remove(ds_path)
-            except Exception:
-                os.remove(ds_path)
+    # Ensure dummies
+    if not os.path.exists(os.path.join(data_dir, "skab")):
+        logger.warning("SKAB dummy data not found. Creating...")
+        create_skab_dummy(data_dir)
+    if not os.path.exists(os.path.join(data_dir, "batadal.csv")):
+        logger.warning("BATADAL dummy data not found. Creating...")
+        create_batadal_dummy(os.path.join(data_dir, "batadal.csv"))
 
-        if not os.path.exists(ds_path):
-            logger.warning(f"Raw dataset {ds} not found at {ds_path}. Creating dummy data...")
-            create_dummy_dataset(ds_path)
-
-    # Initialize data tools
     loader = DataLoader(data_dir)
-    train_ratio = cfg.get("data.train_ratio", 0.6)
-    val_ratio = cfg.get("data.val_ratio", 0.2)
-    test_ratio = cfg.get("data.test_ratio", 0.2)
-    splitter = TemporalSplitter(train_ratio=train_ratio, val_ratio=val_ratio, test_ratio=test_ratio)
-
+    splitter = DatasetSplitter()
+    
     logger.start_timer("total_preprocessing_time")
+    
+    try:
+        preprocess_skab(loader, splitter, cfg, logger, processed_dir)
+    except Exception as e:
+        logger.error(f"Failed to preprocess SKAB: {str(e)}")
 
-    # Run for all datasets
-    for ds in datasets:
-        try:
-            preprocess_dataset(ds, loader, splitter, cfg, logger, processed_dir)
-        except Exception as e:
-            logger.error(f"Failed to preprocess {ds}: {str(e)}")
+    try:
+        preprocess_batadal(loader, splitter, cfg, logger, processed_dir)
+    except Exception as e:
+        logger.error(f"Failed to preprocess BATADAL: {str(e)}")
 
     logger.stop_timer("total_preprocessing_time")
     logger.info("Pipeline Execution Complete.")
     logger.summary()
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="End-to-End Preprocessing Pipeline")

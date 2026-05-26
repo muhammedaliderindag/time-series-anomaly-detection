@@ -26,7 +26,7 @@ class StatisticalTester:
         os.makedirs(self.log_dir, exist_ok=True)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    def run_mcnemar_test(self, dataset_name: str = "swat") -> dict:
+    def run_mcnemar_test(self, dataset_name: str = "skab") -> dict:
         """
         Runs McNemar's test comparing the predictions of the Automata vs. DL model.
         """
@@ -127,4 +127,4 @@ class StatisticalTester:
 
 if __name__ == "__main__":
     tester = StatisticalTester()
-    tester.run_mcnemar_test("swat")
+    tester.run_mcnemar_test("skab")

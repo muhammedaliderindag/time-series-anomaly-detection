@@ -37,6 +37,7 @@ data:
   val_ratio: 0.1
   test_ratio: 0.1
   normalization: "minmax"
+  n_splits: 5
 
 # --- Automata Model Settings ---
 automata:

@@ -31,9 +31,9 @@ def run_pipeline_for_seed(seed: int) -> dict:
     torch.manual_seed(seed)
     random.seed(seed)
     
-    # We will test on SWAT for multi-seed as a representative example
+    # We will test on SKAB for multi-seed as a representative example
     pipeline = AnomalyDetectionPipeline("configs/config.yaml")
-    res = pipeline.run_single_dataset("swat")
+    res = pipeline.run_single_dataset("skab")
     return res["test_metrics"]
 
 def main():
@@ -44,7 +44,7 @@ def main():
     # Step 1: Multi-Seed Execution
     print("\n>>> STEP 1: Multi-Seed Execution Wrapper")
     runner = MultiSeedRunner("configs/config.yaml")
-    runner.run("swat_automata_multiseed", run_pipeline_for_seed)
+    runner.run("skab_automata_multiseed", run_pipeline_for_seed)
     
     # Step 2: Noise Injection & Robustness Testing
     print("\n>>> STEP 2: Noise Injection & Robustness Testing")

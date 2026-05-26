@@ -1,47 +1,28 @@
 """
-Temporal Splitter Module
-========================
-Provides robust, chronological train/validation/test splitting for time series datasets.
-Prevents data leakage by strictly maintaining temporal order (no random shuffling).
-Supports features, labels, and timestamps.
+Data Splitter Module
+====================
+Provides dataset-specific splitting strategies ensuring no data leakage.
+- BATADAL: Chronological 60/20/20 split.
+- SKAB: GroupKFold based on source_file, ensuring the same file doesn't appear
+  in both train and test simultaneously.
 """
 
 import pandas as pd
-from typing import Tuple
+import numpy as np
+from sklearn.model_selection import GroupKFold
+from typing import Tuple, List, Dict
 
 
-class TemporalSplitter:
-    """Splits time series data chronologically."""
+class DatasetSplitter:
+    """Handles dataset-specific splitting logic."""
 
-    def __init__(self, train_ratio: float = 0.6, val_ratio: float = 0.2, test_ratio: float = 0.2):
+    def split_batadal(self, features: pd.DataFrame, labels: pd.DataFrame, times: pd.DataFrame) -> Tuple:
         """
-        Args:
-            train_ratio: Proportion of data for training.
-            val_ratio: Proportion of data for validation.
-            test_ratio: Proportion of data for testing.
-        """
-        assert abs((train_ratio + val_ratio + test_ratio) - 1.0) < 1e-6, "Ratios must sum to 1.0"
-        self.train_ratio = train_ratio
-        self.val_ratio = val_ratio
-        self.test_ratio = test_ratio
-
-    def split(
-        self, features: pd.DataFrame, labels: pd.DataFrame = None, times: pd.DataFrame = None
-    ) -> Tuple[
-        pd.DataFrame, pd.DataFrame, pd.DataFrame,  # features
-        pd.DataFrame, pd.DataFrame, pd.DataFrame,  # labels
-        pd.DataFrame, pd.DataFrame, pd.DataFrame   # times
-    ]:
-        """
-        Splits features, labels, and times into Train, Val, Test chronologically.
-
-        Returns:
-            Tuple of:
-            (train_feat, val_feat, test_feat, train_lbl, val_lbl, test_lbl, train_time, val_time, test_time)
+        Splits BATADAL dataset chronologically (60% Train, 20% Val, 20% Test).
         """
         n = len(features)
-        train_end = int(n * self.train_ratio)
-        val_end = train_end + int(n * self.val_ratio)
+        train_end = int(n * 0.6)
+        val_end = train_end + int(n * 0.2)
 
         # 1. Features
         train_feat = features.iloc[:train_end].copy()
@@ -70,21 +51,60 @@ class TemporalSplitter:
             train_time, val_time, test_time
         )
 
-    def split_batadal(self, features: pd.DataFrame, labels: pd.DataFrame, times: pd.DataFrame) -> Tuple:
+    def get_skab_folds(self, features: pd.DataFrame, labels: pd.DataFrame, meta: pd.DataFrame, n_splits: int = 5) -> List[Dict[str, Tuple]]:
         """
-        Splits BATADAL dataset specifically (60% Train, 20% Val, 20% Test).
+        Generates K-Folds for SKAB using GroupKFold on the 'source_file' column.
+        Splits the train_val set further into train (80%) and val (20%) chronologically
+        within the fold to maintain temporal integrity.
+        
+        Returns:
+            List of dictionaries containing the fold data:
+            [
+                {
+                    "train": (train_feat, train_lbl, train_meta),
+                    "val": (val_feat, val_lbl, val_meta),
+                    "test": (test_feat, test_lbl, test_meta)
+                }, ...
+            ]
         """
-        self.train_ratio, self.val_ratio, self.test_ratio = 0.6, 0.2, 0.2
-        return self.split(features, labels, times)
+        gkf = GroupKFold(n_splits=n_splits)
+        groups = meta["source_file"].values
+        folds = []
 
-    def split_swat(self, features: pd.DataFrame, labels: pd.DataFrame, times: pd.DataFrame) -> Tuple:
-        """
-        Splits SWAT dataset chronologically.
-        """
-        return self.split(features, labels, times)
+        # If there are fewer groups than n_splits, adjust n_splits
+        unique_groups = len(np.unique(groups))
+        if unique_groups < n_splits:
+            n_splits = unique_groups
+            gkf = GroupKFold(n_splits=n_splits)
 
-    def split_wadi(self, features: pd.DataFrame, labels: pd.DataFrame, times: pd.DataFrame) -> Tuple:
-        """
-        Splits WADI dataset chronologically.
-        """
-        return self.split(features, labels, times)
+        for train_val_idx, test_idx in gkf.split(features, groups=groups):
+            # Sort the indices to maintain chronological order
+            train_val_idx = np.sort(train_val_idx)
+            test_idx = np.sort(test_idx)
+            
+            # Split train_val into train and val (80/20)
+            tv_len = len(train_val_idx)
+            val_size = int(tv_len * 0.2)
+            train_idx = train_val_idx[:-val_size]
+            val_idx = train_val_idx[-val_size:]
+
+            fold_data = {
+                "train": (
+                    features.iloc[train_idx].copy(),
+                    labels.iloc[train_idx].copy() if not labels.empty else pd.DataFrame(),
+                    meta.iloc[train_idx].copy()
+                ),
+                "val": (
+                    features.iloc[val_idx].copy(),
+                    labels.iloc[val_idx].copy() if not labels.empty else pd.DataFrame(),
+                    meta.iloc[val_idx].copy()
+                ),
+                "test": (
+                    features.iloc[test_idx].copy(),
+                    labels.iloc[test_idx].copy() if not labels.empty else pd.DataFrame(),
+                    meta.iloc[test_idx].copy()
+                )
+            }
+            folds.append(fold_data)
+
+        return folds

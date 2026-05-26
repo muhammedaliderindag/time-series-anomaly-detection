@@ -7,14 +7,14 @@ def generate_report():
     
     # Table 1: Multi-seed
     t1_md = "*(Data not generated yet)*"
-    multiseed_log = os.path.join(log_dir, "swat_automata_multiseed.json")
+    multiseed_log = os.path.join(log_dir, "skab_automata_multiseed.json")
     if os.path.exists(multiseed_log):
         with open(multiseed_log, "r") as f:
             t1_data = json.load(f)
         agg = t1_data["aggregated"]
         t1_md = f"| Model | Dataset | Mean F1 | Std Dev F1 | Mean Accuracy |\n"
         t1_md += f"|---|---|---|---|---|\n"
-        t1_md += f"| Probabilistic Automata | SWAT | {agg.get('f1_score_mean', agg.get('f1_mean', 0)):.4f} | {agg.get('f1_score_std', agg.get('f1_std', 0)):.4f} | {agg.get('accuracy_mean', 0):.4f} |\n"
+        t1_md += f"| Probabilistic Automata | SKAB | {agg.get('f1_score_mean', agg.get('f1_mean', 0)):.4f} | {agg.get('f1_score_std', agg.get('f1_std', 0)):.4f} | {agg.get('accuracy_mean', 0):.4f} |\n"
     
     # Table 2: Robustness
     t2_md = "*(Data not generated yet)*"
@@ -42,7 +42,7 @@ def generate_report():
     
     # Statistical results
     stat_md = "*(Data not generated yet)*"
-    stat_log = os.path.join(log_dir, "statistical_test_swat.json")
+    stat_log = os.path.join(log_dir, "statistical_test_skab.json")
     if os.path.exists(stat_log):
         with open(stat_log, "r") as f:
             stat_data = json.load(f)
