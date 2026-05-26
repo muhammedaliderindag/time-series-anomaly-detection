@@ -45,6 +45,22 @@ class TestUnseenManagement(unittest.TestCase):
 
         # 4. Tie-breaking check (xyz is dist 3 from all. Alphabetical order ensures abc is picked)
         self.assertEqual(model.find_nearest_state("xyz"), "abc")
+    def test_nearest_state_with_distance(self):
+        """Ensures nearest-state mapping also returns the Levenshtein distance."""
+        model = ProbabilisticAutomaton()
+        model.states = {"abc", "bcd", "cde"}
+
+        nearest_state, distance = model.find_nearest_state_with_distance("acc")
+        self.assertEqual(nearest_state, "abc")
+        self.assertEqual(distance, 1)
+
+        nearest_state, distance = model.find_nearest_state_with_distance("abc")
+        self.assertEqual(nearest_state, "abc")
+        self.assertEqual(distance, 0)
+
+        nearest_state, distance = model.find_nearest_state_with_distance("bce")
+        self.assertEqual(nearest_state, "bcd")
+        self.assertEqual(distance, 1)
 
     def test_nearest_state_empty_model(self):
         """Ensures None is returned if no states have been learned."""

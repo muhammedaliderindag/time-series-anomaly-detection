@@ -33,16 +33,16 @@ model:
 # --- Data ---
 data:
   sequence_length: 100
-  train_ratio: 0.8
-  val_ratio: 0.1
-  test_ratio: 0.1
+  train_ratio: 0.6
+  val_ratio: 0.2
+  test_ratio: 0.2
   normalization: "minmax"
   n_splits: 5
 
 # --- Automata Model Settings ---
 automata:
   paa_segment_size: 5       # number of time steps averaged into one PAA segment
-  alphabet_size: 4          # number of symbols in SAX alphabet
-  window_size: 3            # length of the sliding window of SAX symbols defining a state
+  alphabet_size: 3       # number of symbols in SAX alphabet
+  window_size: 4           # length of the sliding window of SAX symbols defining a state
   anomaly_threshold: 0.05   # transition probability threshold for anomalies
 
