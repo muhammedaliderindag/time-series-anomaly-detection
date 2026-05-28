@@ -1,13 +1,15 @@
 """
 Master Execution Script for Experimental Scenarios
 ==================================================
-Runs all experimental automation:
-1. Multi-seed execution for SKAB and BATADAL
+Runs experimental automation:
+1. Multi-seed execution for SKAB and BATADAL automata experiments
 2. Robustness testing with Gaussian noise
 3. Cross-dataset generalization
 4. Automata parameter variation
+5. Optional deep learning experiments
 """
 
+import argparse
 import os
 import random
 import sys
@@ -15,11 +17,12 @@ from typing import Dict
 
 import numpy as np
 import torch
-
+from src.experiments.statistical_tests import StatisticalTester
 # Ensure project root is on the path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from src.experiments.cross_dataset import CrossDatasetTester
+from src.experiments.dl_experiments import DeepLearningExperimentRunner
 from src.experiments.param_search import ParameterSearchTester
 from src.experiments.robustness import RobustnessTester
 from src.experiments.runner import MultiSeedRunner
@@ -49,9 +52,32 @@ def run_pipeline_for_dataset_and_seed(dataset_name: str, seed: int) -> Dict[str,
     return metrics
 
 
+def parse_args():
+    """Parses command line arguments."""
+    parser = argparse.ArgumentParser(
+        description="Run automata and optional deep learning experiments."
+    )
+
+    parser.add_argument(
+        "--include-dl",
+        action="store_true",
+        help="Also run LSTM and 1D-CNN deep learning experiments. This can take a long time."
+    )
+
+    parser.add_argument(
+        "--dl-smoke-test",
+        action="store_true",
+        help="Run a quick DL smoke test instead of the full DL experiment."
+    )
+
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
+
     print("=" * 60)
-    print("STARTING PHASE 5: EXPERIMENTAL AUTOMATION & SCENARIO TESTING")
+    print("STARTING EXPERIMENTAL AUTOMATION & SCENARIO TESTING")
     print("=" * 60)
 
     runner = MultiSeedRunner("configs/config.yaml")
@@ -75,8 +101,31 @@ def main():
     param_search = ParameterSearchTester("configs/config.yaml")
     param_search.run_grid_search()
 
+    if args.dl_smoke_test:
+        print("\n>>> STEP 5: Deep Learning Smoke Test")
+        dl_runner = DeepLearningExperimentRunner("configs/config.yaml")
+        dl_runner.run(
+            datasets=["batadal"],
+            models=["cnn"],
+            seeds=[42]
+        )
+
+    elif args.include_dl:
+        print("\n>>> STEP 5: Full Deep Learning Experiments")
+        print("WARNING: This may take a long time on CPU.")
+        dl_runner = DeepLearningExperimentRunner("configs/config.yaml")
+        dl_runner.run()
+
+    else:
+        print("\n>>> STEP 5: Deep Learning Experiments Skipped")
+        print("Use --dl-smoke-test for a quick check or --include-dl for full DL experiments.")
+
+    print("\n>>> STEP 6: Statistical Significance Testing")
+    statistical_tester = StatisticalTester("configs/config.yaml")
+    statistical_tester.run()
+
     print("\n" + "=" * 60)
-    print("ALL EXPERIMENTS COMPLETED SUCCESSFULLY!")
+    print("ALL REQUESTED EXPERIMENTS COMPLETED SUCCESSFULLY!")
     print("Check the 'logs/' and 'results/' directories for experiment outputs.")
     print("=" * 60)
 

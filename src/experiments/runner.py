@@ -57,15 +57,24 @@ class MultiSeedRunner:
             print(f"{k}: {v:.4f}")
             
         # Log to file
+                # Log to files
         output = {
             "experiment": experiment_name,
             "runs": all_metrics,
             "aggregated": aggregated
         }
-        
-        log_path = os.path.join(self.log_dir, f"{experiment_name}_multiseed.json")
-        with open(log_path, "w", encoding="utf-8") as f:
+
+        suffix = "" if experiment_name.endswith("_multiseed") else "_multiseed"
+
+        json_path = os.path.join(self.log_dir, f"{experiment_name}{suffix}.json")
+        csv_path = os.path.join(self.log_dir, f"{experiment_name}{suffix}.csv")
+
+        with open(json_path, "w", encoding="utf-8") as f:
             json.dump(output, f, indent=4)
-            
-        print(f"Results logged to {log_path}\n")
+
+        df.to_csv(csv_path, index=False)
+
+        print(f"Aggregated results logged to {json_path}")
+        print(f"Per-seed results saved to {csv_path}\n")
+
         return aggregated
