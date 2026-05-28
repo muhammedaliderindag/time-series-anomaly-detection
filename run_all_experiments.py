@@ -7,6 +7,8 @@ Runs experimental automation:
 3. Cross-dataset generalization
 4. Automata parameter variation
 5. Optional deep learning experiments
+6. Unseen pattern analysis
+7. Statistical significance testing
 """
 
 import argparse
@@ -17,7 +19,7 @@ from typing import Dict
 
 import numpy as np
 import torch
-from src.experiments.statistical_tests import StatisticalTester
+
 # Ensure project root is on the path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,6 +28,8 @@ from src.experiments.dl_experiments import DeepLearningExperimentRunner
 from src.experiments.param_search import ParameterSearchTester
 from src.experiments.robustness import RobustnessTester
 from src.experiments.runner import MultiSeedRunner
+from src.experiments.statistical_tests import StatisticalTester
+from src.experiments.unseen_analysis import UnseenAnalysisRunner
 from src.pipelines.anomaly_detection_pipeline import AnomalyDetectionPipeline
 
 
@@ -120,7 +124,11 @@ def main():
         print("\n>>> STEP 5: Deep Learning Experiments Skipped")
         print("Use --dl-smoke-test for a quick check or --include-dl for full DL experiments.")
 
-    print("\n>>> STEP 6: Statistical Significance Testing")
+    print("\n>>> STEP 6: Unseen Pattern Analysis")
+    unseen_runner = UnseenAnalysisRunner("configs/config.yaml")
+    unseen_runner.run()
+
+    print("\n>>> STEP 7: Statistical Significance Testing")
     statistical_tester = StatisticalTester("configs/config.yaml")
     statistical_tester.run()
 
