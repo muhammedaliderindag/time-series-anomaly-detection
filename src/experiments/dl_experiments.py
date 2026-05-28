@@ -6,6 +6,8 @@ Runs LSTM and 1D-CNN autoencoder experiments on processed PCA time-series data.
 Outputs:
 - results/dl_experiment_results.csv
 - results/dl_experiment_results.json
+- results/dl_experiment_summary.csv
+- results/dl_experiment_summary.json
 
 The module evaluates reconstruction-error-based anomaly detection using:
 - dynamic threshold from train reconstruction scores
@@ -16,7 +18,7 @@ import json
 import os
 import random
 import time
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -191,37 +193,34 @@ class DeepLearningExperimentRunner:
 
         train_scores = evaluate_model(trainer.model, train_loader, self.device)
         test_scores = evaluate_model(trainer.model, test_loader, self.device)
-        threshold_percentile = self.cfg.get("deep_learning.threshold_percentile", 95.0)
-        threshold = calculate_dynamic_threshold(
-             train_scores,
-             percentile=threshold_percentile
+
+        threshold_percentile = self.cfg.get(
+            "deep_learning.threshold_percentile",
+            95.0
         )
-    
+        threshold = calculate_dynamic_threshold(
+            train_scores,
+            percentile=threshold_percentile
+        )
 
-        
         test_preds = detect_anomalies(test_scores, threshold).astype(int)
-
         inference_time = time.perf_counter() - inference_start
 
         y_true = self._labels_to_windows(test_labels_raw, self.sequence_length)
+
         if len(y_true) != len(test_preds):
             raise ValueError(
-               "DL label/prediction length mismatch: "
+                "DL label/prediction length mismatch: "
                 f"labels={len(y_true)}, predictions={len(test_preds)}"
             )
-            
 
-        y_pred = test_preds
-
-       
-
-        metrics = calculate_metrics(y_true, y_pred)
+        metrics = calculate_metrics(y_true, test_preds)
 
         return {
             "dataset": dataset_name,
-            "fold": fold_idx,
+            "fold": int(fold_idx),
             "model": model_name,
-            "seed": seed,
+            "seed": int(seed),
             "accuracy": float(metrics.get("accuracy", 0.0)),
             "precision": float(metrics.get("precision", 0.0)),
             "recall": float(metrics.get("recall", 0.0)),
@@ -230,16 +229,119 @@ class DeepLearningExperimentRunner:
             "threshold_percentile": float(threshold_percentile),
             "training_time_sec": float(training_time),
             "inference_time_sec": float(inference_time),
-            "epochs_ran": len(train_losses),
+            "epochs_ran": int(len(train_losses)),
             "final_train_loss": float(train_losses[-1]) if train_losses else None,
             "final_val_loss": float(val_losses[-1]) if val_losses else None
         }
 
+    def _merge_with_existing_results(
+        self,
+        new_results: List[Dict[str, Any]]
+    ) -> pd.DataFrame:
+        """
+        Merges newly generated DL results with existing result files.
+
+        If the same dataset/model/seed/fold combination already exists,
+        the newest row is kept. This prevents accidental overwriting while
+        still allowing reruns to update previous failed or outdated entries.
+        """
+        csv_path = os.path.join(self.results_dir, "dl_experiment_results.csv")
+
+        new_df = pd.DataFrame(new_results)
+
+        if new_df.empty:
+            if os.path.exists(csv_path):
+                return pd.read_csv(csv_path)
+            return pd.DataFrame()
+
+        if os.path.exists(csv_path):
+            existing_df = pd.read_csv(csv_path)
+            combined_df = pd.concat([existing_df, new_df], ignore_index=True)
+        else:
+            combined_df = new_df
+
+        dedup_keys = ["dataset", "model", "seed", "fold"]
+
+        combined_df = combined_df.drop_duplicates(
+            subset=dedup_keys,
+            keep="last"
+        )
+
+        combined_df = combined_df.sort_values(
+            by=["dataset", "model", "seed", "fold"]
+        ).reset_index(drop=True)
+
+        return combined_df
+
+    def _save_results(self, all_results: List[Dict[str, Any]]) -> pd.DataFrame:
+        """Saves detailed DL experiment results without overwriting old runs."""
+        json_path = os.path.join(self.results_dir, "dl_experiment_results.json")
+        csv_path = os.path.join(self.results_dir, "dl_experiment_results.csv")
+
+        combined_df = self._merge_with_existing_results(all_results)
+
+        combined_records = combined_df.to_dict(orient="records")
+
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(combined_records, f, indent=4, ensure_ascii=False)
+
+        combined_df.to_csv(csv_path, index=False)
+
+        print(f"\nDetailed DL results saved to {csv_path}")
+
+        return combined_df
+
+    def _save_summary(self, results_df: Optional[pd.DataFrame] = None) -> None:
+        """Saves mean/std summary grouped by dataset and model."""
+        results_path = os.path.join(self.results_dir, "dl_experiment_results.csv")
+
+        if results_df is None:
+            if not os.path.exists(results_path):
+                return
+            results_df = pd.read_csv(results_path)
+
+        if results_df.empty:
+            return
+
+        summary_df = (
+            results_df.groupby(["dataset", "model"])
+            .agg({
+                "accuracy": ["mean", "std"],
+                "precision": ["mean", "std"],
+                "recall": ["mean", "std"],
+                "f1": ["mean", "std"],
+                "training_time_sec": ["mean", "std"],
+                "inference_time_sec": ["mean", "std"]
+            })
+        )
+
+        summary_df.columns = [
+            "_".join(col).strip()
+            for col in summary_df.columns.values
+        ]
+
+        summary_df = summary_df.reset_index()
+
+        csv_path = os.path.join(self.results_dir, "dl_experiment_summary.csv")
+        json_path = os.path.join(self.results_dir, "dl_experiment_summary.json")
+
+        summary_df.to_csv(csv_path, index=False)
+
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(
+                summary_df.to_dict(orient="records"),
+                f,
+                indent=4,
+                ensure_ascii=False
+            )
+
+        print(f"DL summary saved to {csv_path}")
+
     def run(
         self,
-        datasets: List[str] = None,
-        models: List[str] = None,
-        seeds: List[int] = None
+        datasets: Optional[List[str]] = None,
+        models: Optional[List[str]] = None,
+        seeds: Optional[List[int]] = None
     ) -> List[Dict[str, Any]]:
         """Runs DL experiments across datasets, models, and seeds."""
         if datasets is None:
@@ -251,7 +353,7 @@ class DeepLearningExperimentRunner:
         if seeds is None:
             seeds = self.seeds
 
-        all_results = []
+        all_results: List[Dict[str, Any]] = []
 
         print("--- Starting Deep Learning Experiments ---")
         print(f"Device: {self.device}")
@@ -285,63 +387,10 @@ class DeepLearningExperimentRunner:
                     mean_f1 = float(np.mean([r["f1"] for r in fold_results]))
                     print(f"  Mean F1: {mean_f1:.4f}")
 
-        self._save_results(all_results)
-        self._save_summary(all_results)
+        combined_results_df = self._save_results(all_results)
+        self._save_summary(combined_results_df)
 
         return all_results
-
-    def _save_results(self, all_results: List[Dict[str, Any]]) -> None:
-        """Saves detailed DL experiment results."""
-        json_path = os.path.join(self.results_dir, "dl_experiment_results.json")
-        csv_path = os.path.join(self.results_dir, "dl_experiment_results.csv")
-
-        with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(all_results, f, indent=4, ensure_ascii=False)
-
-        pd.DataFrame(all_results).to_csv(csv_path, index=False)
-
-        print(f"\nDetailed DL results saved to {csv_path}")
-
-    def _save_summary(self, all_results: List[Dict[str, Any]]) -> None:
-        """Saves mean/std summary grouped by dataset and model."""
-        if not all_results:
-            return
-
-        df = pd.DataFrame(all_results)
-
-        summary_df = (
-            df.groupby(["dataset", "model"])
-            .agg({
-                "accuracy": ["mean", "std"],
-                "precision": ["mean", "std"],
-                "recall": ["mean", "std"],
-                "f1": ["mean", "std"],
-                "training_time_sec": ["mean", "std"],
-                "inference_time_sec": ["mean", "std"]
-            })
-        )
-
-        summary_df.columns = [
-            "_".join(col).strip()
-            for col in summary_df.columns.values
-        ]
-
-        summary_df = summary_df.reset_index()
-
-        csv_path = os.path.join(self.results_dir, "dl_experiment_summary.csv")
-        json_path = os.path.join(self.results_dir, "dl_experiment_summary.json")
-
-        summary_df.to_csv(csv_path, index=False)
-
-        with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(
-                summary_df.to_dict(orient="records"),
-                f,
-                indent=4,
-                ensure_ascii=False
-            )
-
-        print(f"DL summary saved to {csv_path}")
 
 
 if __name__ == "__main__":
