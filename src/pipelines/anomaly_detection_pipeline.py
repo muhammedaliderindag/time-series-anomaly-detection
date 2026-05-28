@@ -28,7 +28,10 @@ class AnomalyDetectionPipeline:
     def __init__(self, config_path: str = "configs/config.yaml"):
         self.config_path = config_path
         self.cfg = ConfigParser(config_path)
-        self.logger = ExperimentLogger(self.cfg.config, experiment_name="automata_experiment")
+        self.logger = ExperimentLogger(
+            self.cfg.config,
+            experiment_name="automata_experiment"
+        )
 
         self.anomaly_threshold = self.cfg.get("automata.anomaly_threshold", 0.05)
         self.paa_segment_size = self.cfg.get("automata.paa_segment_size", 5)
@@ -61,13 +64,14 @@ class AnomalyDetectionPipeline:
         justifications: List[Dict[str, Any]],
         path_probability: float,
         confidence_score: float,
-        max_steps: int = 25
+        max_preview_steps: int = 25
     ) -> str:
         """
-        Saves report-ready explainability output.
+        Saves explainability output.
 
-        Only the first max_steps are saved to keep the JSON readable for reports.
-        The full decision logic is still computed on the complete test path.
+        The full decision path is saved under 'steps' so downstream analyses
+        can compute complete seen/unseen statistics. A short report-friendly
+        preview is also saved under 'preview_steps'.
         """
         payload = {
             "dataset": dataset_name,
@@ -83,7 +87,8 @@ class AnomalyDetectionPipeline:
                 path_probability,
                 confidence_score
             ),
-            "steps": justifications[:max_steps]
+            "steps": justifications,
+            "preview_steps": justifications[:max_preview_steps]
         }
 
         filename = f"{dataset_name}_fold{fold_idx}_explainability.json"
@@ -96,7 +101,12 @@ class AnomalyDetectionPipeline:
 
         return np.zeros(length)
 
-    def _run_fold(self, dataset_name: str, fold_dir: str, fold_idx: int) -> Dict[str, Any]:
+    def _run_fold(
+        self,
+        dataset_name: str,
+        fold_dir: str,
+        fold_idx: int
+    ) -> Dict[str, Any]:
         """Runs training and evaluation for a single dataset fold."""
         train_pca = np.load(os.path.join(fold_dir, "train_pca.npy")).flatten()
         val_pca = np.load(os.path.join(fold_dir, "val_pca.npy")).flatten()
@@ -125,14 +135,16 @@ class AnomalyDetectionPipeline:
         val_patterns = extractor.extract_patterns(sax.transform(val_pca))
         test_patterns = extractor.extract_patterns(sax.transform(test_pca))
 
-        model = ProbabilisticAutomaton(model_dir=self.cfg.get("paths.model_dir"))
+        model = ProbabilisticAutomaton(
+            model_dir=self.cfg.get("paths.model_dir")
+        )
         model.fit(train_patterns)
         model.save(f"{dataset_name}_fold{fold_idx}_automaton.json")
 
         explainability = AutomataExplainability(model, self.anomaly_threshold)
 
-        test_justifications, path_probability, confidence_score = explainability.explain_path(
-            test_patterns
+        test_justifications, path_probability, confidence_score = (
+            explainability.explain_path(test_patterns)
         )
 
         explanation_path = self._save_explainability_output(
@@ -167,7 +179,10 @@ class AnomalyDetectionPipeline:
 
         return test_metrics
 
-    def _summarize_fold_metrics(self, fold_metrics: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def _summarize_fold_metrics(
+        self,
+        fold_metrics: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
         """Computes mean and standard deviation for numeric fold metrics."""
         summary: Dict[str, Any] = {}
 
@@ -208,14 +223,13 @@ class AnomalyDetectionPipeline:
 
             self.logger.info(f"--- SKAB (Avg over {len(fold_dirs)} folds) ---")
             self.logger.info(
-                 "Accuracy: "
+                "Accuracy: "
                 f"{summary_metrics['accuracy']['mean']:.4f} +/- "
                 f"{summary_metrics['accuracy']['std']:.4f}, "
                 "F1: "
-                 f"{summary_metrics['f1']['mean']:.4f} +/- "
-               f"{summary_metrics['f1']['std']:.4f}"
-)
-        
+                f"{summary_metrics['f1']['mean']:.4f} +/- "
+                f"{summary_metrics['f1']['std']:.4f}"
+            )
 
             return {
                 "dataset": dataset_name,
