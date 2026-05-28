@@ -39,10 +39,12 @@ class RobustnessTester:
         self,
         data: np.ndarray,
         mean: float = 0.0,
-        std: float = 0.1
+        std: float = 0.1,
+        seed: int = 42
     ) -> np.ndarray:
-        """Adds Gaussian noise to the given PCA signal."""
-        noise = np.random.normal(mean, std, size=data.shape)
+        """Adds reproducible Gaussian noise to the given PCA signal."""
+        rng = np.random.default_rng(seed)
+        noise = rng.normal(mean, std, size=data.shape)
         return data + noise
 
     def evaluate_automata(
@@ -208,7 +210,13 @@ class RobustnessTester:
                 noisy_metrics = []
 
                 for fold_idx, (test_pca, test_lbl_orig) in enumerate(zip(test_pcas, test_labels)):
-                    noisy_test_pca = self.inject_gaussian_noise(test_pca, std=std)
+                    noise_seed = 42 + fold_idx + int(std * 1000)
+                    noisy_test_pca = self.inject_gaussian_noise(
+                        test_pca,
+                        std=std,
+                        seed=noise_seed
+                    )
+                    
 
                     noisy_metrics.append(
                         self.evaluate_automata(
