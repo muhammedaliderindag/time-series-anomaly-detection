@@ -39,6 +39,13 @@ class AutomataExplainability:
             f"the anomaly threshold {self.anomaly_threshold:.6f}."
         )
 
+    def _make_confidence_level(self, probability: float) -> str:
+        """Converts transition probability into a deterministic confidence level."""
+        if probability < self.anomaly_threshold:
+            return "low"
+
+        return "high"
+
     def explain_path(self, raw_patterns: List[str]) -> Tuple[List[Dict[str, Any]], float, float]:
         """
         Evaluates a sequence of observed patterns, tracking transitions and anomalies.
@@ -79,6 +86,8 @@ class AutomataExplainability:
             "edit_distance": first_distance,
             "transition": None,
             "probability": 1.0,
+            "confidence_score": 1.0,
+            "confidence_level": "high",
             "path_probability_so_far": 1.0,
             "threshold": float(self.anomaly_threshold),
             "decision": "normal",
@@ -112,6 +121,8 @@ class AutomataExplainability:
                 "edit_distance": eval_res["s_to_edit_distance"],
                 "transition": eval_res["transition"],
                 "probability": probability,
+                "confidence_score": probability,
+                "confidence_level": self._make_confidence_level(probability),
                 "path_probability_so_far": float(path_probability),
                 "threshold": float(self.anomaly_threshold),
                 "decision": decision,
