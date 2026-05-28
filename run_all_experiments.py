@@ -2,69 +2,84 @@
 Master Execution Script for Experimental Scenarios
 ==================================================
 Runs all experimental automation:
-1. Multi-seed execution
-2. Robustness testing (Gaussian Noise)
-3. Cross-Dataset Generalization
-4. Automata Parameter Variation
+1. Multi-seed execution for SKAB and BATADAL
+2. Robustness testing with Gaussian noise
+3. Cross-dataset generalization
+4. Automata parameter variation
 """
 
-import sys
 import os
+import random
+import sys
+from typing import Dict
+
+import numpy as np
+import torch
 
 # Ensure project root is on the path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from src.experiments.runner import MultiSeedRunner
-from src.experiments.robustness import RobustnessTester
 from src.experiments.cross_dataset import CrossDatasetTester
 from src.experiments.param_search import ParameterSearchTester
+from src.experiments.robustness import RobustnessTester
+from src.experiments.runner import MultiSeedRunner
+from src.pipelines.anomaly_detection_pipeline import AnomalyDetectionPipeline
 
-def run_pipeline_for_seed(seed: int) -> dict:
-    """Wrapper function for multi-seed execution."""
-    from src.pipelines.anomaly_detection_pipeline import AnomalyDetectionPipeline
-    import numpy as np
-    import torch
-    import random
-    
-    # Enforce reproducibility for this run
+
+def set_global_seed(seed: int) -> None:
+    """Sets random seeds for reproducible experiment execution."""
+    random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
-    random.seed(seed)
-    
-    # We will test on SKAB for multi-seed as a representative example
+
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+
+def run_pipeline_for_dataset_and_seed(dataset_name: str, seed: int) -> Dict[str, float]:
+    """Runs the automata pipeline for one dataset and one random seed."""
+    set_global_seed(seed)
+
     pipeline = AnomalyDetectionPipeline("configs/config.yaml")
-    res = pipeline.run_single_dataset("skab")
-    return res["test_metrics"]
+    result = pipeline.run_single_dataset(dataset_name)
+
+    metrics = result["test_metrics"].copy()
+    metrics["dataset"] = dataset_name
+
+    return metrics
+
 
 def main():
     print("=" * 60)
     print("STARTING PHASE 5: EXPERIMENTAL AUTOMATION & SCENARIO TESTING")
     print("=" * 60)
-    
-    # Step 1: Multi-Seed Execution
-    print("\n>>> STEP 1: Multi-Seed Execution Wrapper")
+
     runner = MultiSeedRunner("configs/config.yaml")
-    runner.run("skab_automata_multiseed", run_pipeline_for_seed)
-    
-    # Step 2: Noise Injection & Robustness Testing
+
+    print("\n>>> STEP 1: Multi-Seed Execution for SKAB and BATADAL")
+    for dataset_name in ["skab", "batadal"]:
+        runner.run(
+            f"{dataset_name}_automata_multiseed",
+            lambda seed, ds=dataset_name: run_pipeline_for_dataset_and_seed(ds, seed)
+        )
+
     print("\n>>> STEP 2: Noise Injection & Robustness Testing")
     robustness = RobustnessTester("configs/config.yaml")
     robustness.run_robustness_test(std_list=[0.05, 0.1, 0.2, 0.5])
-    
-    # Step 3: Cross-Dataset Generalization Testing
+
     print("\n>>> STEP 3: Cross-Dataset Generalization Testing")
     cross_tester = CrossDatasetTester("configs/config.yaml")
     cross_tester.evaluate_cross_dataset()
-    
-    # Step 4: Automata Parameter Variation Testing
+
     print("\n>>> STEP 4: Automata Parameter Variation Testing")
     param_search = ParameterSearchTester("configs/config.yaml")
     param_search.run_grid_search()
-    
+
     print("\n" + "=" * 60)
     print("ALL EXPERIMENTS COMPLETED SUCCESSFULLY!")
-    print("Check the 'logs/' directory for the aggregated CSV and JSON results.")
+    print("Check the 'logs/' and 'results/' directories for experiment outputs.")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     main()
