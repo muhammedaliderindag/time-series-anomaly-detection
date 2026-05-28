@@ -66,7 +66,28 @@ class TestUnseenManagement(unittest.TestCase):
         """Ensures None is returned if no states have been learned."""
         model = ProbabilisticAutomaton()
         self.assertIsNone(model.find_nearest_state("abc"))
+    def test_transition_probabilities_are_normalized(self):
+        """Verifies that outgoing transition probabilities sum to 1 for each source state."""
+        model = ProbabilisticAutomaton()
+        model.fit(["aaa", "aab", "aaa", "aac", "aaa"])
 
+        for source_state, targets in model.transition_matrix.items():
+            total_probability = sum(targets.values())
+            self.assertAlmostEqual(total_probability, 1.0, places=7)
+
+        self.assertAlmostEqual(model.get_transition_probability("aaa", "aab"), 0.5)
+        self.assertAlmostEqual(model.get_transition_probability("aaa", "aac"), 0.5)
+        self.assertAlmostEqual(model.get_transition_probability("aab", "aaa"), 1.0)
+        self.assertAlmostEqual(model.get_transition_probability("aac", "aaa"), 1.0)
+        self.assertEqual(model.get_transition_probability("unknown", "aaa"), 0.0)
+    
+
+     
+
+
+        
+    
+    
 
 if __name__ == "__main__":
     unittest.main()

@@ -208,13 +208,14 @@ class AnomalyDetectionPipeline:
 
             self.logger.info(f"--- SKAB (Avg over {len(fold_dirs)} folds) ---")
             self.logger.info(
-                "Accuracy: "
-                f"{summary_metrics['accuracy']['mean']:.4f} ± "
+                 "Accuracy: "
+                f"{summary_metrics['accuracy']['mean']:.4f} +/- "
                 f"{summary_metrics['accuracy']['std']:.4f}, "
                 "F1: "
-                f"{summary_metrics['f1']['mean']:.4f} ± "
-                f"{summary_metrics['f1']['std']:.4f}"
-            )
+                 f"{summary_metrics['f1']['mean']:.4f} +/- "
+               f"{summary_metrics['f1']['std']:.4f}"
+)
+        
 
             return {
                 "dataset": dataset_name,
