@@ -91,12 +91,33 @@ def run_pipeline(config_path: str = "configs/config.yaml") -> None:
     os.makedirs(processed_dir, exist_ok=True)
 
     # Ensure dummies
-    if not os.path.exists(os.path.join(data_dir, "skab")):
-        logger.warning("SKAB dummy data not found. Creating...")
-        create_skab_dummy(data_dir)
-    if not os.path.exists(os.path.join(data_dir, "batadal.csv")):
-        logger.warning("BATADAL dummy data not found. Creating...")
-        create_batadal_dummy(os.path.join(data_dir, "batadal.csv"))
+   
+    allow_dummy_data = cfg.get("data.allow_dummy_data", False)
+
+    skab_path = os.path.join(data_dir, "skab")
+    batadal_path = os.path.join(data_dir, "batadal.csv")
+
+    if not os.path.exists(skab_path):
+        if allow_dummy_data:
+            logger.warning("Real SKAB dataset not found. Creating dummy SKAB data because allow_dummy_data=True.")
+            create_skab_dummy(data_dir)
+        else:
+            raise FileNotFoundError(
+                f"Real SKAB dataset not found at {skab_path}. "
+                "Place the SKAB dataset under data/skab with valve1 and valve2 folders, "
+                "or set data.allow_dummy_data=true for development-only dummy data."
+            )
+
+    if not os.path.exists(batadal_path):
+        if allow_dummy_data:
+            logger.warning("Real BATADAL dataset not found. Creating dummy BATADAL data because allow_dummy_data=True.")
+            create_batadal_dummy(batadal_path)
+        else:
+            raise FileNotFoundError(
+                f"Real BATADAL Training Dataset 2 file not found at {batadal_path}. "
+                "Place BATADAL Training Dataset 2 as data/batadal.csv, "
+                "or set data.allow_dummy_data=true for development-only dummy data."
+            )
 
     loader = DataLoader(data_dir)
     splitter = DatasetSplitter()

@@ -38,6 +38,7 @@ data:
   test_ratio: 0.2
   normalization: "minmax"
   n_splits: 5
+  allow_dummy_data: false
 
 # --- Automata Model Settings ---
 automata:
@@ -46,3 +47,6 @@ automata:
   window_size: 4           # length of the sliding window of SAX symbols defining a state
   anomaly_threshold: 0.05   # transition probability threshold for anomalies
 
+# --- Deep Learning Settings ---
+deep_learning:
+  threshold_percentile: 95.0

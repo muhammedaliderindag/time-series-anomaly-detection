@@ -12,16 +12,22 @@ from typing import List, Union
 
 
 def z_normalize(data: np.ndarray) -> np.ndarray:
-    """Z-normalizes a z-score of the data to have mean=0 and std=1."""
+    """Z-normalizes the data to have mean=0 and std=1."""
+    data = np.asarray(data, dtype=float)
+
+    if data.size == 0:
+        raise ValueError("data must contain at least one value.")
+
     std = np.std(data)
     if std == 0:
         return np.zeros_like(data)
+
     return (data - np.mean(data)) / std
 
 
 def piecewise_aggregate_approximation(data: np.ndarray, segment_size: int) -> np.ndarray:
     """
-    Reduces the z-score of the time series by averaging non-overlapping segments.
+    Reduces the time series by averaging non-overlapping segments.
 
     Args:
         data: 1D numpy array representing the time series.
@@ -30,17 +36,26 @@ def piecewise_aggregate_approximation(data: np.ndarray, segment_size: int) -> np
     Returns:
         PAA-reduced 1D numpy array.
     """
+    data = np.asarray(data, dtype=float)
     n = len(data)
-    if segment_size <= 1:
+
+    if n == 0:
+        raise ValueError("data must contain at least one value.")
+
+    if segment_size < 1:
+        raise ValueError("segment_size must be at least 1.")
+
+    if segment_size == 1:
         return data.copy()
 
-    # Truncate to make divisible, or pad. Truncating is simple and clean for long time series.
     num_segments = n // segment_size
+
     if num_segments == 0:
         return np.array([np.mean(data)])
 
     truncated_data = data[:num_segments * segment_size]
     reshaped = truncated_data.reshape(num_segments, segment_size)
+
     return np.mean(reshaped, axis=1)
 
 
