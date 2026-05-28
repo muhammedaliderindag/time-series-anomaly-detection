@@ -191,17 +191,29 @@ class DeepLearningExperimentRunner:
 
         train_scores = evaluate_model(trainer.model, train_loader, self.device)
         test_scores = evaluate_model(trainer.model, test_loader, self.device)
+        threshold_percentile = self.cfg.get("deep_learning.threshold_percentile", 95.0)
+        threshold = calculate_dynamic_threshold(
+             train_scores,
+             percentile=threshold_percentile
+        )
+    
 
-        threshold = calculate_dynamic_threshold(train_scores, percentile=95.0)
+        
         test_preds = detect_anomalies(test_scores, threshold).astype(int)
 
         inference_time = time.perf_counter() - inference_start
 
         y_true = self._labels_to_windows(test_labels_raw, self.sequence_length)
+        if len(y_true) != len(test_preds):
+            raise ValueError(
+               "DL label/prediction length mismatch: "
+                f"labels={len(y_true)}, predictions={len(test_preds)}"
+            )
+            
 
-        min_len = min(len(y_true), len(test_preds))
-        y_true = y_true[:min_len]
-        y_pred = test_preds[:min_len]
+        y_pred = test_preds
+
+       
 
         metrics = calculate_metrics(y_true, y_pred)
 
@@ -215,6 +227,7 @@ class DeepLearningExperimentRunner:
             "recall": float(metrics.get("recall", 0.0)),
             "f1": float(metrics.get("f1", 0.0)),
             "threshold": float(threshold),
+            "threshold_percentile": float(threshold_percentile),
             "training_time_sec": float(training_time),
             "inference_time_sec": float(inference_time),
             "epochs_ran": len(train_losses),

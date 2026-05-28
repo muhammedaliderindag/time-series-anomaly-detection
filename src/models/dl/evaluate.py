@@ -68,4 +68,11 @@ def calculate_dynamic_threshold(train_anomaly_scores: np.ndarray, percentile: fl
     Returns:
         float: Calculated threshold.
     """
+    if train_anomaly_scores.size == 0:
+        raise ValueError("train_anomaly_scores cannot be empty.")
+
+    if not 0 < percentile < 100:
+        raise ValueError(
+            f"percentile must be between 0 and 100, got {percentile}"
+        )
     return float(np.percentile(train_anomaly_scores, percentile))

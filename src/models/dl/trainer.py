@@ -97,7 +97,9 @@ class ModelTrainer:
                 break
                 
         # Load the best model weights
-        self.model.load_state_dict(torch.load(self.checkpoint_path))
+        self.model.load_state_dict(
+            torch.load(self.checkpoint_path, map_location=self.device)
+        )
         print("Loaded best model weights from checkpoint.")
         
         return train_losses, val_losses
