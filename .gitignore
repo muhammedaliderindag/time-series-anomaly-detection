@@ -18,6 +18,5 @@ logs/*.csv
 *.h5
 .DS_Store
 /models/
-/results/
 /data/processed/
 /models/artifacts/

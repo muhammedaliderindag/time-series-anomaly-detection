@@ -1,0 +1,7 @@
+dataset,fold,file,total_steps,seen_count,unseen_count,unseen_rate,mapped_unseen_count,mapped_unseen_rate,mean_edit_distance,max_edit_distance,anomaly_count,anomaly_rate,unseen_anomaly_count,unseen_anomaly_rate,mean_transition_probability,min_transition_probability,zero_probability_transition_count
+batadal,0,batadal_fold0_explainability.json,164,164,0,0.0,0,0.0,0.0,0.0,14,0.08536585365853659,0,0.0,0.5088209145012739,0.0,14
+skab,0,skab_fold0_explainability.json,899,898,1,0.0011123470522803114,1,1.0,1.0,1.0,7,0.00778642936596218,1,1.0,0.9766982941565849,0.0,1
+skab,1,skab_fold1_explainability.json,895,895,0,0.0,0,0.0,0.0,0.0,9,0.01005586592178771,0,0.0,0.9705760548666938,0.0,1
+skab,2,skab_fold2_explainability.json,895,893,2,0.0022346368715083797,2,1.0,1.0,1.0,15,0.01675977653631285,2,1.0,0.9596136835314367,0.0,8
+skab,3,skab_fold3_explainability.json,883,880,3,0.0033975084937712344,3,1.0,1.0,1.0,10,0.011325028312570781,2,0.6666666666666666,0.969510749859814,0.0,3
+skab,4,skab_fold4_explainability.json,905,899,6,0.0066298342541436465,6,1.0,1.0,1.0,9,0.009944751381215469,2,0.3333333333333333,0.9740125183598979,0.0,3

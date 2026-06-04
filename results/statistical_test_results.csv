@@ -1,0 +1,7 @@
+dataset,model_a,model_b,pairing_key,n_pairs,statistic,p_value,significant_at_0_05,mean_a,mean_b,std_a,std_b,reason
+skab,lstm,cnn,dataset+seed+fold,25,38.0,0.12083865311418159,False,0.1409151241385451,0.08427673468804892,0.16716074145542284,0.14471838961950287,Wilcoxon signed-rank test completed.
+skab,automata,cnn,dataset+seed,5,0.0,0.0625,False,0.0236287083407467,0.08427673468804893,0.0,0.025128576807681383,Wilcoxon signed-rank test completed.
+skab,automata,lstm,dataset+seed,5,0.0,0.0625,False,0.0236287083407467,0.14091512413854507,0.0,0.010452493280399875,Wilcoxon signed-rank test completed.
+batadal,lstm,cnn,dataset+seed+fold,5,0.0,0.0625,False,0.21969410043065732,0.6276232108677494,0.07464815188902542,0.03132821816907968,Wilcoxon signed-rank test completed.
+batadal,automata,cnn,dataset+seed,5,0.0,0.0625,False,0.2702702702702703,0.6276232108677494,0.0,0.03132821816907968,Wilcoxon signed-rank test completed.
+batadal,automata,lstm,dataset+seed,5,3.0,0.3125,False,0.2702702702702703,0.21969410043065732,0.0,0.07464815188902542,Wilcoxon signed-rank test completed.

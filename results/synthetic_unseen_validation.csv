@@ -1,0 +1,7 @@
+step,input_pattern,status,mapped_to,edit_distance,transition_from,transition_to,transition_probability,threshold,decision,reason
+0,aac,unseen,aaa,1,,,1.0,0.05,normal,Initial state has no incoming transition.
+1,abc,unseen,abb,1,aaa,abb,0.0,0.05,anomaly,Transition probability 0.000000 is below the anomaly threshold 0.050000.
+2,acc,unseen,bcc,1,abb,bcc,0.0,0.05,anomaly,Transition probability 0.000000 is below the anomaly threshold 0.050000.
+3,bbc,seen,,0,bcc,bbc,0.5,0.05,normal,Transition probability 0.500000 is greater than or equal to the anomaly threshold 0.050000.
+4,ccc,seen,,0,bbc,ccc,0.0,0.05,anomaly,Transition probability 0.000000 is below the anomaly threshold 0.050000.
+5,caa,unseen,aaa,1,ccc,aaa,0.0,0.05,anomaly,Transition probability 0.000000 is below the anomaly threshold 0.050000.
