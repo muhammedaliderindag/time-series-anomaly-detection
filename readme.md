@@ -553,6 +553,7 @@ Wilcoxon signed-rank test sonuçlarına göre model çiftleri arasındaki perfor
 | `results/statistical_test_results.csv` | İstatistiksel anlamlılık testleri |
 | `results/*_explainability.json` | Automata açıklanabilirlik çıktıları |
 | `logs/*_multiseed.csv` | Multi-seed automata deney çıktıları |
+| `Grup63_Ek_Deney_Sonuclari.pdf` | Deney sonuçları ve karşılaştırmalı analiz tablolarını içeren ek PDF raporu |
 
 ---
 
