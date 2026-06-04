@@ -335,97 +335,143 @@ Gaussian noise deneylerinde kullanılan standart sapma değerleri:
 
 ## 10. Deney Sonuçları ve Karşılaştırmalı Analiz
 
-> **Not:** Bu bölüm final SKAB LSTM 5-seed koşusu tamamlandıktan sonra nihai değerlerle güncellenecektir. Şu anki tablo yapıları rapor formatını sabitlemek için hazırlanmıştır. Teslimden önce `TODO` alanları gerçek sonuçlarla değiştirilecektir.
+Bu bölümde derin öğrenme modelleri, otomata tabanlı model, gürültü etkisi, unseen pattern davranışı, cross-dataset genellenebilirlik, parametre duyarlılığı, runtime ve istatistiksel anlamlılık sonuçları birlikte değerlendirilmiştir.
 
 ---
 
 ### 10.1 Model Performansı ve Stabilitesi
 
-Bu tablo, modellerin SKAB ve BATADAL veri setleri üzerindeki ortalama F1-score ve standart sapma değerlerini göstermektedir.
+Aşağıdaki tablo, modellerin SKAB ve BATADAL veri setleri üzerindeki ortalama performanslarını göstermektedir. Derin öğrenme modelleri 5 farklı random seed ile çalıştırılmıştır. SKAB için sonuçlar 5 fold üzerinden, BATADAL için ise kronolojik test split'i üzerinden raporlanmıştır.
 
 | Dataset | Model | Accuracy Mean | Accuracy Std | F1 Mean | F1 Std |
 |---|---|---:|---:|---:|---:|
-| BATADAL | 1D-CNN | TODO | TODO | TODO | TODO |
-| BATADAL | LSTM | TODO | TODO | TODO | TODO |
-| BATADAL | Automata | TODO | TODO | TODO | TODO |
-| SKAB | 1D-CNN | TODO | TODO | TODO | TODO |
-| SKAB | LSTM | TODO | TODO | TODO | TODO |
-| SKAB | Automata | TODO | TODO | TODO | TODO |
+| BATADAL | 1D-CNN | 0.7536 | 0.0373 | 0.6276 | 0.0313 |
+| BATADAL | LSTM | 0.6630 | 0.0153 | 0.2197 | 0.0746 |
+| BATADAL | Automata | 0.8354 | 0.0000 | 0.2703 | 0.0000 |
+| SKAB | 1D-CNN | 0.5384 | 0.0181 | 0.0843 | 0.1447 |
+| SKAB | LSTM | 0.5266 | 0.0601 | 0.1409 | 0.1672 |
+| SKAB | Automata | 0.6310 | 0.0000 | 0.0236 | 0.0000 |
+
+BATADAL veri setinde en yüksek F1-score değeri 1D-CNN modeli tarafından elde edilmiştir. Automata modeli BATADAL üzerinde en yüksek accuracy değerine sahip olsa da F1-score açısından 1D-CNN modelinin gerisinde kalmıştır. Bu durum, accuracy değerinin sınıf dengesizliği bulunan anomali tespiti problemlerinde tek başına yeterli olmadığını göstermektedir.
+
+SKAB veri setinde LSTM modeli, 1D-CNN ve automata modeline göre daha yüksek F1-score üretmiştir. Ancak SKAB üzerinde tüm modellerin F1-score değerleri BATADAL'a göre daha düşüktür. Bunun temel nedenleri arasında dosya bazlı GroupKFold ayrımı, veri setinin fold bazlı dağılım farklılıkları ve anomalilerin daha zor ayrıştırılması yer almaktadır.
 
 ---
 
 ### 10.2 Veri Setleri Arası Performans Farkları
 
-Bu bölümde modellerin SKAB ve BATADAL üzerindeki performans farkları analiz edilecektir.
+Model performansları veri setine göre belirgin biçimde değişmiştir. BATADAL üzerinde 1D-CNN modeli yüksek F1-score değerine ulaşırken, SKAB üzerinde aynı model oldukça düşük F1-score üretmiştir.
 
-Özellikle aşağıdaki sorular değerlendirilmiştir:
+| Dataset | En Yüksek F1 Veren Model | En Yüksek F1 |
+|---|---|---:|
+| BATADAL | 1D-CNN | 0.6276 |
+| SKAB | LSTM | 0.1409 |
 
-- Hangi model hangi veri setinde daha başarılıdır?
-- Automata modeli hangi veri setinde daha açıklanabilir sonuç üretmektedir?
-- Derin öğrenme modelleri veri setlerine göre nasıl değişmektedir?
-- SKAB ve BATADAL arasındaki performans farkları ne göstermektedir?
+BATADAL veri setinde 1D-CNN modelinin yüksek performans göstermesi, reconstruction error tabanlı CNN yaklaşımının bu veri setindeki anomali örüntülerini daha iyi ayırt ettiğini göstermektedir.
 
-Genel olarak BATADAL veri setinde 1D-CNN modelinin daha yüksek F1-score ürettiği gözlemlenmiştir. SKAB veri setinde ise GroupKFold yapısı, dosya bazlı ayrım ve veri setinin yapısı nedeniyle modeller daha düşük F1-score değerleri üretmiştir.
+SKAB veri setinde ise daha düşük F1-score değerleri elde edilmiştir. Bu sonuç, SKAB veri setinin kullanılan split protokolü altında daha zorlayıcı olduğunu göstermektedir. Özellikle aynı `source_file` değerine sahip kayıtların train ve test kümelerine birlikte girmesinin engellenmesi, veri sızıntısını önlemiş ancak görevi daha zor hale getirmiştir.
 
-SKAB sonuçlarının düşük olması doğrudan modelin hatalı çalıştığı anlamına gelmemektedir. Random row split yapılmadığı için veri sızıntısı önlenmiş, daha gerçekçi ancak daha zor bir değerlendirme protokolü uygulanmıştır.
+Bu nedenle SKAB sonuçlarının düşük olması doğrudan modelin hatalı çalıştığı anlamına gelmemektedir. Aksine, rastgele satır bazlı bölme yapılmadığı için daha gerçekçi ve daha zor bir değerlendirme protokolü uygulanmıştır.
 
 ---
 
 ### 10.3 Gürültü Etkisi Analizi
 
-Gaussian noise eklenmiş veriler üzerinde model davranışı analiz edilmiştir.
+Gaussian noise eklenmiş veriler üzerinde automata modelinin dayanıklılığı test edilmiştir. Aşağıdaki tablo, orijinal veri ve farklı standart sapmalarda gürültü eklenmiş veri üzerindeki F1-score değerlerini göstermektedir.
 
-| Dataset | Noise Std | Accuracy | Precision | Recall | F1 |
+| Dataset | Original F1 | Noise 0.05 F1 | Noise 0.1 F1 | Noise 0.2 F1 | Noise 0.5 F1 |
 |---|---:|---:|---:|---:|---:|
-| TODO | TODO | TODO | TODO | TODO | TODO |
+| SKAB | 0.0236 | 0.0689 | 0.1267 | 0.1979 | 0.3059 |
+| BATADAL | 0.2703 | 0.2778 | 0.2778 | 0.4186 | 0.3043 |
 
-Bu analiz, modelin veri kalitesindeki bozulmaya karşı ne kadar dayanıklı olduğunu değerlendirmek için kullanılmıştır.
+SKAB veri setinde noise seviyesi arttıkça F1-score değerinin yükseldiği görülmüştür. Bu durum, noise eklenmesinin bazı düşük olasılıklı geçişleri daha belirgin hale getirmiş olabileceğini düşündürmektedir.
+
+BATADAL veri setinde ise en yüksek F1-score değeri 0.2 noise seviyesinde elde edilmiştir. Ancak 0.5 noise seviyesinde performans düşmüştür. Bu durum, orta seviyedeki gürültünün bazı ayrımları belirginleştirebildiğini, ancak yüksek gürültünün veri yapısını bozarak performansı düşürebildiğini göstermektedir.
 
 ---
 
 ### 10.4 Unseen Veri Davranışı
 
-Unseen pattern analizi, gerçek explainability çıktıları üzerinden yapılmıştır.
+Unseen pattern analizi, gerçek explainability çıktıları üzerinden yapılmıştır. Unseen pattern, test sırasında eğitim SAX sözlüğünde bulunmayan pattern olarak tanımlanmıştır.
 
-| Dataset | Fold | Total Steps | Unseen Count | Unseen Rate | Mapped Unseen Rate | Mean Edit Distance |
-|---|---:|---:|---:|---:|---:|---:|
-| TODO | TODO | TODO | TODO | TODO | TODO | TODO |
+| Dataset | Fold | Total Steps | Unseen Count | Unseen Rate | Mapped Unseen Rate | Mean Edit Distance | Unseen Anomaly Rate |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| BATADAL | 0 | 164 | 0 | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| SKAB | 0 | 899 | 1 | 0.0011 | 1.0000 | 1.0000 | 1.0000 |
+| SKAB | 1 | 895 | 0 | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| SKAB | 2 | 895 | 2 | 0.0022 | 1.0000 | 1.0000 | 1.0000 |
+| SKAB | 3 | 883 | 3 | 0.0034 | 1.0000 | 1.0000 | 0.6667 |
+| SKAB | 4 | 905 | 6 | 0.0066 | 1.0000 | 1.0000 | 0.3333 |
 
-Unseen pattern durumunda sistem, Levenshtein edit distance kullanarak en yakın train pattern değerine mapping yapmıştır. Mapping başarısı `mapped_unseen_rate` metriği ile raporlanmıştır.
+BATADAL test setinde unseen pattern gözlemlenmemiştir. SKAB veri setinde ise bazı foldlarda düşük oranda unseen pattern oluşmuştur. Tüm unseen pattern'ların Levenshtein edit distance kullanılarak en yakın state'e başarıyla map edildiği görülmektedir.
+
+SKAB foldlarında `mapped_unseen_rate` değerinin 1.0 olması, unseen pattern yönetim mekanizmasının test sırasında çalıştığını göstermektedir. Ortalama edit distance değerinin 1.0 olması, unseen pattern'ların eğitim sözlüğündeki en yakın pattern'lardan yalnızca küçük sembolik farklarla ayrıldığını göstermektedir.
 
 ---
 
 ### 10.5 Cross-Dataset Genellenebilirlik
 
-Cross-dataset deneylerinde model bir veri setinde eğitilip diğer veri setinde test edilmiştir.
+Cross-dataset deneylerinde automata modeli bir veri setinde eğitilip diğer veri setinde test edilmiştir.
 
 | Train Dataset | Test Dataset | Accuracy | Precision | Recall | F1 |
 |---|---|---:|---:|---:|---:|
-| TODO | TODO | TODO | TODO | TODO | TODO |
+| SKAB | SKAB | 0.6301 | 0.3333 | 0.0104 | 0.0201 |
+| SKAB | BATADAL | 0.3963 | 0.1275 | 0.5652 | 0.2080 |
+| BATADAL | SKAB | 0.3713 | 0.3668 | 0.9836 | 0.5343 |
+| BATADAL | BATADAL | 0.8354 | 0.3571 | 0.2174 | 0.2703 |
 
-Bu deney, modelin yalnızca eğitildiği veri setine mi uyum sağladığını yoksa farklı veri setlerine genellenebilir davranış gösterip göstermediğini analiz etmek için yapılmıştır.
+BATADAL üzerinde eğitilip SKAB üzerinde test edilen modelin F1-score değeri 0.5343 olarak ölçülmüştür. Bu sonuç, BATADAL üzerinde öğrenilen bazı geçiş yapılarının SKAB test senaryosunda anomalileri yakalama açısından daha duyarlı davranabildiğini göstermektedir.
+
+Buna karşın SKAB üzerinde eğitilip BATADAL üzerinde test edilen modelin F1-score değeri 0.2080 seviyesinde kalmıştır. Bu durum, modelin öğrendiği sembolik geçiş yapılarının veri setine bağlı olduğunu ve cross-dataset genellenebilirliğin simetrik olmadığını göstermektedir.
 
 ---
 
 ### 10.6 Automata Parametre Duyarlılık Analizi
 
-Bu bölümde window size ve alphabet size parametrelerinin model performansı, state sayısı ve transition density üzerindeki etkileri analiz edilmiştir.
+Bu bölümde window size ve alphabet size parametrelerinin model performansı, state count ve transition density üzerindeki etkileri analiz edilmiştir.
+
+#### SKAB için Seçilmiş Parametre Sonuçları
 
 | Window Size | Alphabet Size | Accuracy | F1 | State Count | Transition Density |
 |---:|---:|---:|---:|---:|---:|
-| TODO | TODO | TODO | TODO | TODO | TODO |
+| 3 | 3 | 0.6356 | 0.0192 | 15.6 | 0.1197 |
+| 4 | 3 | 0.6310 | 0.0236 | 29.2 | 0.0549 |
+| 4 | 6 | 0.5819 | 0.1599 | 64.4 | 0.0253 |
+| 5 | 6 | 0.5783 | 0.1703 | 103.0 | 0.0141 |
+| 6 | 6 | 0.5729 | 0.1774 | 146.6 | 0.0090 |
 
-Parametre duyarlılık analizi, otomata modelinin sembolik temsil boyutu değiştikçe nasıl davrandığını göstermektedir.
+#### BATADAL için Seçilmiş Parametre Sonuçları
+
+| Window Size | Alphabet Size | Accuracy | F1 | State Count | Transition Density |
+|---:|---:|---:|---:|---:|---:|
+| 3 | 3 | 0.8727 | 0.0000 | 26.0 | 0.1006 |
+| 4 | 3 | 0.8354 | 0.2703 | 68.0 | 0.0279 |
+| 4 | 6 | 0.5183 | 0.3009 | 316.0 | 0.0042 |
+| 5 | 5 | 0.4908 | 0.2655 | 364.0 | 0.0033 |
+| 6 | 6 | 0.4136 | 0.2857 | 470.0 | 0.0022 |
+
+Parametre analizi, window size ve alphabet size arttıkça state count değerinin yükseldiğini, transition density değerinin ise düştüğünü göstermektedir. Bu beklenen bir davranıştır; çünkü sembolik uzay büyüdükçe daha fazla state oluşmakta, ancak geçişler daha seyrek hale gelmektedir.
+
+SKAB veri setinde daha büyük alphabet size değerleri F1-score değerini artırma eğilimi göstermiştir. BATADAL veri setinde ise en yüksek F1-score değerlerinden biri `window_size=4, alphabet_size=6` kombinasyonunda elde edilmiştir.
 
 ---
 
 ### 10.7 Runtime Karşılaştırması
 
-| Dataset | Model | Training Time Mean, sec | Inference Time Mean, sec | Accuracy Mean | F1 Mean |
-|---|---|---:|---:|---:|---:|
-| TODO | TODO | TODO | TODO | TODO | TODO |
+Aşağıdaki tablo, modellerin ortalama eğitim ve inference sürelerini göstermektedir.
 
-Runtime analizi, black-box derin öğrenme modelleri ile otomata tabanlı modelin eğitim ve inference maliyetlerini karşılaştırmak için yapılmıştır.
+| Dataset | Model | Training Time Mean, sec | Training Time Std | Inference Time Mean, sec | Accuracy Mean | F1 Mean |
+|---|---|---:|---:|---:|---:|---:|
+| SKAB | Automata | 0.3648 | 0.0000 | 0.0000 | 0.6310 | 0.0236 |
+| BATADAL | Automata | 0.0403 | 0.0000 | 0.0000 | 0.8354 | 0.2703 |
+| BATADAL | 1D-CNN | 86.8981 | 17.8485 | 0.6147 | 0.7536 | 0.6276 |
+| BATADAL | LSTM | 242.6546 | 64.5634 | 1.0070 | 0.6630 | 0.2197 |
+| SKAB | 1D-CNN | 164.8927 | 101.9135 | 2.2889 | 0.5384 | 0.0843 |
+| SKAB | LSTM | 518.9486 | 221.3806 | 7.6417 | 0.5266 | 0.1409 |
+
+Runtime sonuçları, automata tabanlı modelin derin öğrenme modellerine göre çok daha düşük eğitim süresine sahip olduğunu göstermektedir. LSTM modeli özellikle SKAB üzerinde en yüksek eğitim süresine sahiptir. 1D-CNN modeli ise LSTM'e göre daha kısa sürede eğitilmiş ve BATADAL üzerinde daha yüksek F1-score üretmiştir.
+
+Bu sonuçlar, performans ve çalışma süresi arasında modelden modele değişen bir trade-off olduğunu göstermektedir.
 
 ---
 
@@ -435,11 +481,16 @@ Model davranışlarının istatistiksel olarak anlamlı olup olmadığını değ
 
 | Dataset | Model A | Model B | Pairing Key | N Pairs | Statistic | P-value | Significant at 0.05 |
 |---|---|---|---|---:|---:|---:|---|
-| TODO | TODO | TODO | TODO | TODO | TODO | TODO | TODO |
+| SKAB | LSTM | 1D-CNN | dataset+seed+fold | 25 | 38.0 | 0.1208 | False |
+| SKAB | Automata | 1D-CNN | dataset+seed | 5 | 0.0 | 0.0625 | False |
+| SKAB | Automata | LSTM | dataset+seed | 5 | 0.0 | 0.0625 | False |
+| BATADAL | LSTM | 1D-CNN | dataset+seed+fold | 5 | 0.0 | 0.0625 | False |
+| BATADAL | Automata | 1D-CNN | dataset+seed | 5 | 0.0 | 0.0625 | False |
+| BATADAL | Automata | LSTM | dataset+seed | 5 | 3.0 | 0.3125 | False |
 
-İstatistiksel test çıktıları aşağıdaki dosyada tutulmaktadır:
+Wilcoxon signed-rank test sonuçlarına göre model çiftleri arasındaki performans farkları 0.05 anlamlılık düzeyinde istatistiksel olarak anlamlı bulunmamıştır. Ancak ortalama F1-score değerleri, modellerin veri setlerine göre farklı davranışlar sergilediğini göstermektedir.
 
-- `results/statistical_test_results.csv`
+Özellikle BATADAL üzerinde 1D-CNN modelinin ortalama F1-score değeri diğer modellere göre daha yüksektir. SKAB üzerinde ise LSTM modeli daha yüksek ortalama F1-score üretmiştir. Bu sonuçlar, istatistiksel anlamlılık bulunmasa bile model davranışlarının veri setine bağlı olarak değiştiğini göstermektedir.
 
 ---
 
