@@ -790,7 +790,16 @@ Sunumlar veya özel analizler için sadece belirli bir testi çalıştırmak ist
 python run_all_experiments.py --test robustness
 ```
 
-Kabul edilen parametreler: `all`, `multiseed`, `robustness`, `cross_dataset`, `param_search`, `dl`, `unseen`, `runtime`, `statistics`.
+Kabul edilen parametreler ve işlevleri:
+- `all` : Tüm deneysel senaryoları sırayla çalıştırır (Varsayılan).
+- `multiseed` : SKAB ve BATADAL veri setleri için çoklu-tohum (multi-seed) automata testlerini koşar.
+- `robustness` : Modelin gürültüye karşı dayanıklılığını ölçmek için veriye Gaussian noise ekleyerek testi tekrarlar.
+- `cross_dataset` : Modeli bir veri setinde eğitip diğerinde test ederek genellenebilirliği (cross-dataset transferi) ölçer.
+- `param_search` : Automata modeli için farklı window size ve alphabet size kombinasyonlarını dener (Grid Search).
+- `dl` : Derin öğrenme (LSTM ve 1D-CNN) modellerinin eğitimini ve testini başlatır.
+- `unseen` : Eğitim setinde bulunmayan (unseen) örüntülerin model tarafından nasıl çözümlendiğini analiz eder.
+- `runtime` : Çalıştırılan modellerin eğitim ve tahmin (inference) sürelerini karşılaştırmalı olarak raporlar.
+- `statistics` : Model performansları arasındaki farkların istatistiksel olarak anlamlı olup olmadığını Wilcoxon Signed-Rank testi ile hesaplar.
 
 ### 16.6 Deep Learning Deneyleri
 
