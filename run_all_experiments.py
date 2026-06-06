@@ -65,6 +65,14 @@ def parse_args():
     )
 
     parser.add_argument(
+        "--test",
+        type=str,
+        default="all",
+        choices=["all", "multiseed", "robustness", "cross_dataset", "param_search", "dl", "unseen", "runtime", "statistics"],
+        help="Specify which test to run. Default is 'all'."
+    )
+
+    parser.add_argument(
         "--include-dl",
         action="store_true",
         help="Also run LSTM and 1D-CNN deep learning experiments. This can take a long time."
@@ -88,55 +96,61 @@ def main():
 
     runner = MultiSeedRunner("configs/config.yaml")
 
-    print("\n>>> STEP 1: Multi-Seed Execution for SKAB and BATADAL")
-    for dataset_name in ["skab", "batadal"]:
-        runner.run(
-            f"{dataset_name}_automata_multiseed",
-            lambda seed, ds=dataset_name: run_pipeline_for_dataset_and_seed(ds, seed)
-        )
+    if args.test in ["all", "multiseed"]:
+        print("\n>>> STEP 1: Multi-Seed Execution for SKAB and BATADAL")
+        for dataset_name in ["skab", "batadal"]:
+            runner.run(
+                f"{dataset_name}_automata_multiseed",
+                lambda seed, ds=dataset_name: run_pipeline_for_dataset_and_seed(ds, seed)
+            )
 
-    print("\n>>> STEP 2: Noise Injection & Robustness Testing")
-    robustness = RobustnessTester("configs/config.yaml")
-    robustness.run_robustness_test(std_list=[0.05, 0.1, 0.2, 0.5])
+    if args.test in ["all", "robustness"]:
+        print("\n>>> STEP 2: Noise Injection & Robustness Testing")
+        robustness = RobustnessTester("configs/config.yaml")
+        robustness.run_robustness_test(std_list=[0.05, 0.1, 0.2, 0.5])
 
-    print("\n>>> STEP 3: Cross-Dataset Generalization Testing")
-    cross_tester = CrossDatasetTester("configs/config.yaml")
-    cross_tester.evaluate_cross_dataset()
+    if args.test in ["all", "cross_dataset"]:
+        print("\n>>> STEP 3: Cross-Dataset Generalization Testing")
+        cross_tester = CrossDatasetTester("configs/config.yaml")
+        cross_tester.evaluate_cross_dataset()
 
-    print("\n>>> STEP 4: Automata Parameter Variation Testing")
-    param_search = ParameterSearchTester("configs/config.yaml")
-    param_search.run_grid_search()
+    if args.test in ["all", "param_search"]:
+        print("\n>>> STEP 4: Automata Parameter Variation Testing")
+        param_search = ParameterSearchTester("configs/config.yaml")
+        param_search.run_grid_search()
 
-    if args.dl_smoke_test:
-        print("\n>>> STEP 5: Deep Learning Smoke Test")
-        dl_runner = DeepLearningExperimentRunner("configs/config.yaml")
-        dl_runner.run(
-            datasets=["batadal"],
-            models=["cnn"],
-            seeds=[42]
-        )
+    if args.test in ["all", "dl"]:
+        if args.dl_smoke_test:
+            print("\n>>> STEP 5: Deep Learning Smoke Test")
+            dl_runner = DeepLearningExperimentRunner("configs/config.yaml")
+            dl_runner.run(
+                datasets=["batadal"],
+                models=["cnn"],
+                seeds=[42]
+            )
+        elif args.include_dl or args.test == "dl":
+            print("\n>>> STEP 5: Full Deep Learning Experiments")
+            print("WARNING: This may take a long time on CPU.")
+            dl_runner = DeepLearningExperimentRunner("configs/config.yaml")
+            dl_runner.run()
+        else:
+            print("\n>>> STEP 5: Deep Learning Experiments Skipped")
+            print("Use --dl-smoke-test for a quick check or --include-dl for full DL experiments.")
 
-    elif args.include_dl:
-        print("\n>>> STEP 5: Full Deep Learning Experiments")
-        print("WARNING: This may take a long time on CPU.")
-        dl_runner = DeepLearningExperimentRunner("configs/config.yaml")
-        dl_runner.run()
+    if args.test in ["all", "unseen"]:
+        print("\n>>> STEP 6: Unseen Pattern Analysis")
+        unseen_runner = UnseenAnalysisRunner("configs/config.yaml")
+        unseen_runner.run()
 
-    else:
-        print("\n>>> STEP 5: Deep Learning Experiments Skipped")
-        print("Use --dl-smoke-test for a quick check or --include-dl for full DL experiments.")
+    if args.test in ["all", "runtime"]:
+        print("\n>>> STEP 7: Runtime Summary Generation")
+        runtime_runner = RuntimeSummaryRunner("configs/config.yaml")
+        runtime_runner.run()
 
-    print("\n>>> STEP 6: Unseen Pattern Analysis")
-    unseen_runner = UnseenAnalysisRunner("configs/config.yaml")
-    unseen_runner.run()
-
-    print("\n>>> STEP 7: Runtime Summary Generation")
-    runtime_runner = RuntimeSummaryRunner("configs/config.yaml")
-    runtime_runner.run()
-
-    print("\n>>> STEP 8: Statistical Significance Testing")
-    statistical_tester = StatisticalTester("configs/config.yaml")
-    statistical_tester.run()
+    if args.test in ["all", "statistics"]:
+        print("\n>>> STEP 8: Statistical Significance Testing")
+        statistical_tester = StatisticalTester("configs/config.yaml")
+        statistical_tester.run()
 
     print("\n" + "=" * 60)
     print("ALL REQUESTED EXPERIMENTS COMPLETED SUCCESSFULLY!")

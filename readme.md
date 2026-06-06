@@ -783,6 +783,15 @@ Bu komut sırasıyla aşağıdaki adımları çalıştırır:
 7. Runtime summary üretimi
 8. İstatistiksel anlamlılık testleri
 
+**Belirli Bir Testi Çalıştırma:**
+Sunumlar veya özel analizler için sadece belirli bir testi çalıştırmak isterseniz `--test` parametresini kullanabilirsiniz:
+
+```bash
+python run_all_experiments.py --test robustness
+```
+
+Kabul edilen parametreler: `all`, `multiseed`, `robustness`, `cross_dataset`, `param_search`, `dl`, `unseen`, `runtime`, `statistics`.
+
 ### 16.6 Deep Learning Deneyleri
 
 Deep learning deneyleri uzun sürdüğü için varsayılan olarak atlanır. Çalıştırma seçenekleri:
@@ -822,14 +831,26 @@ python -m pytest tests/ -v
 
 ### 16.9 Docker ile Çalıştırma
 
-```bash
-# Docker Compose ile
-docker-compose up --build
+Projeyi sisteminize Python kurmadan, tamamen izole bir Docker ortamında çalıştırmak için aşağıdaki komutları kullanabilirsiniz:
 
-# Veya doğrudan Docker ile
-docker build -t ts-anomaly-detection .
-docker run -v .:/app ts-anomaly-detection
+```bash
+# Sadece veri ön işleme ve temel automata modelini çalıştırmak için
+docker-compose run --rm anomaly-detection python main.py
+
+# Tüm deneysel senaryoları sırayla çalıştırmak için
+docker-compose run --rm anomaly-detection python run_all_experiments.py
+
+# Tüm deneysel senaryoları derin öğrenme (DL) testleri dahil çalıştırmak için
+docker-compose run --rm anomaly-detection python run_all_experiments.py --include-dl
+
+# SADECE spesifik bir testi çalıştırmak için (Örn: Gürültü/Robustness testi)
+docker-compose run --rm anomaly-detection python run_all_experiments.py --test robustness
+
+# SADECE Deep Learning testlerini çalıştırmak için
+docker-compose run --rm anomaly-detection python run_all_experiments.py --test dl
 ```
+
+**Not:** Bu komutlardaki `--rm` parametresi, işlem bittikten sonra kullanılan geçici container'ı otomatik olarak silerek sisteminizde gereksiz yer kaplamasını önler. Çıktılar otomatik olarak bilgisayarınızdaki `results/` ve `logs/` klasörlerine kaydedilecektir.
 
 ---
 
