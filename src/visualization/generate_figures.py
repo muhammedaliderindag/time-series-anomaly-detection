@@ -29,11 +29,10 @@ import pandas as pd
 RESULTS_DIR = "results"
 FIGURES_DIR = "figures"
 
-os.makedirs(FIGURES_DIR, exist_ok=True)
-
-
 def save_current_figure(filename: str) -> None:
     """Saves the active matplotlib figure with a clean layout."""
+    # Ensure the directory exists right before saving
+    os.makedirs(FIGURES_DIR, exist_ok=True)
     path = os.path.join(FIGURES_DIR, filename)
     plt.tight_layout()
     plt.savefig(path, dpi=300, bbox_inches="tight")
@@ -303,9 +302,18 @@ def plot_automata_state_diagram(
     save_current_figure(output_name)
 
 
-def main() -> None:
+def main(output_dir: str = None) -> None:
     """Generates all available report figures."""
-    print("--- Generating report figures ---")
+    global FIGURES_DIR
+    if output_dir is None:
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        FIGURES_DIR = os.path.join("figures", timestamp)
+    else:
+        FIGURES_DIR = output_dir
+
+    os.makedirs(FIGURES_DIR, exist_ok=True)
+    print(f"--- Generating report figures into {FIGURES_DIR} ---")
 
     plot_model_f1_comparison()
     plot_runtime_training_time()

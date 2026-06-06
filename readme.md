@@ -800,6 +800,7 @@ Kabul edilen parametreler ve işlevleri:
 - `unseen` : Eğitim setinde bulunmayan (unseen) örüntülerin model tarafından nasıl çözümlendiğini analiz eder.
 - `runtime` : Çalıştırılan modellerin eğitim ve tahmin (inference) sürelerini karşılaştırmalı olarak raporlar.
 - `statistics` : Model performansları arasındaki farkların istatistiksel olarak anlamlı olup olmadığını Wilcoxon Signed-Rank testi ile hesaplar.
+- `figures` : `results/` dizinindeki mevcut .csv ve .json dosyalarını okuyarak tüm grafikleri `figures/<tarih_saat>/` klasörüne otomatik üretir.
 
 ### 16.6 Deep Learning Deneyleri
 
@@ -857,6 +858,9 @@ docker-compose run --rm anomaly-detection python run_all_experiments.py --test r
 
 # SADECE Deep Learning testlerini çalıştırmak için
 docker-compose run --rm anomaly-detection python run_all_experiments.py --test dl
+
+# SADECE mevcut sonuçlardan Grafikleri (Figures) üretmek için
+docker-compose run --rm anomaly-detection python run_all_experiments.py --test figures
 ```
 
 **Not:** Bu komutlardaki `--rm` parametresi, işlem bittikten sonra kullanılan geçici container'ı otomatik olarak silerek sisteminizde gereksiz yer kaplamasını önler. Çıktılar otomatik olarak bilgisayarınızdaki `results/` ve `logs/` klasörlerine kaydedilecektir.

@@ -68,7 +68,7 @@ def parse_args():
         "--test",
         type=str,
         default="all",
-        choices=["all", "multiseed", "robustness", "cross_dataset", "param_search", "dl", "unseen", "runtime", "statistics"],
+        choices=["all", "multiseed", "robustness", "cross_dataset", "param_search", "dl", "unseen", "runtime", "statistics", "figures"],
         help="Specify which test to run. Default is 'all'."
     )
 
@@ -152,9 +152,32 @@ def main():
         statistical_tester = StatisticalTester("configs/config.yaml")
         statistical_tester.run()
 
+    output_dir = None
+    if args.test in ["all", "figures"]:
+        print("\n>>> STEP 9: Figure Generation")
+        try:
+            from datetime import datetime
+            from src.visualization import generate_figures, generate_prediction_figures
+            
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            output_dir = os.path.join("figures", timestamp)
+            
+            generate_figures.main(output_dir=output_dir)
+            
+            if args.include_dl or args.dl_smoke_test or os.path.exists("results/dl_experiment_results.csv"):
+                try:
+                    generate_prediction_figures.main(output_dir=output_dir)
+                except Exception as e:
+                    print(f"Warning: Could not generate prediction figures: {e}")
+                    
+        except Exception as e:
+            print(f"Warning: Figure generation failed: {e}")
+
     print("\n" + "=" * 60)
     print("ALL REQUESTED EXPERIMENTS COMPLETED SUCCESSFULLY!")
     print("Check the 'logs/' and 'results/' directories for experiment outputs.")
+    if output_dir:
+        print(f"Check the '{output_dir}' directory for generated graphs.")
     print("=" * 60)
 
 

@@ -26,12 +26,12 @@ RESULTS_DIR = "results"
 FIGURES_DIR = "figures"
 PREDICTIONS_DIR = os.path.join(RESULTS_DIR, "predictions")
 
-os.makedirs(FIGURES_DIR, exist_ok=True)
 os.makedirs(PREDICTIONS_DIR, exist_ok=True)
 
 
 def save_current_figure(filename: str) -> None:
     """Saves the active matplotlib figure."""
+    os.makedirs(FIGURES_DIR, exist_ok=True)
     path = os.path.join(FIGURES_DIR, filename)
     plt.tight_layout()
     plt.savefig(path, dpi=300, bbox_inches="tight")
@@ -255,9 +255,18 @@ def plot_precision_recall_curve_from_predictions(
     )
 
 
-def main() -> None:
+def main(output_dir: str = None) -> None:
     """Generates confusion matrix and PR curve figures for selected final models."""
-    print("--- Generating prediction-based figures ---")
+    global FIGURES_DIR
+    if output_dir is None:
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        FIGURES_DIR = os.path.join("figures", timestamp)
+    else:
+        FIGURES_DIR = output_dir
+
+    os.makedirs(FIGURES_DIR, exist_ok=True)
+    print(f"--- Generating prediction-based figures into {FIGURES_DIR} ---")
 
     seeds = [42, 123, 2026, 7, 999]
 
