@@ -1,0 +1,153 @@
+{
+  "states": [
+    "aaaa",
+    "aaab",
+    "aaba",
+    "aabb",
+    "aabc",
+    "abaa",
+    "abba",
+    "abbb",
+    "abcc",
+    "baaa",
+    "baab",
+    "baba",
+    "babb",
+    "bbaa",
+    "bbab",
+    "bbba",
+    "bbbb",
+    "bbbc",
+    "bbcb",
+    "bbcc",
+    "bcbb",
+    "bcbc",
+    "bccb",
+    "bccc",
+    "cbbb",
+    "cbbc",
+    "cbcb",
+    "cbcc",
+    "ccbb",
+    "ccbc",
+    "cccb",
+    "cccc"
+  ],
+  "transition_matrix": {
+    "cccc": {
+      "cccc": 0.9959016393442623,
+      "cccb": 0.004098360655737705
+    },
+    "cccb": {
+      "ccbb": 0.3333333333333333,
+      "ccbc": 0.6666666666666666
+    },
+    "ccbb": {
+      "cbbb": 0.8,
+      "cbbc": 0.2
+    },
+    "cbbb": {
+      "bbbb": 0.625,
+      "bbbc": 0.375
+    },
+    "bbbb": {
+      "bbbb": 0.9728260869565217,
+      "bbba": 0.019021739130434784,
+      "bbbc": 0.008152173913043478
+    },
+    "bbba": {
+      "bbab": 0.5714285714285714,
+      "bbaa": 0.42857142857142855
+    },
+    "bbab": {
+      "baba": 0.5,
+      "babb": 0.5
+    },
+    "baba": {
+      "abaa": 1.0
+    },
+    "abaa": {
+      "baaa": 0.6666666666666666,
+      "baab": 0.3333333333333333
+    },
+    "baaa": {
+      "aaaa": 1.0
+    },
+    "aaaa": {
+      "aaaa": 0.9965823650034177,
+      "aaab": 0.003417634996582365
+    },
+    "aaab": {
+      "aabb": 0.6,
+      "aaba": 0.2,
+      "aabc": 0.2
+    },
+    "aabb": {
+      "abbb": 1.0
+    },
+    "abbb": {
+      "bbbb": 1.0
+    },
+    "babb": {
+      "abba": 0.5,
+      "abbb": 0.5
+    },
+    "abba": {
+      "bbaa": 1.0
+    },
+    "bbaa": {
+      "baaa": 1.0
+    },
+    "baab": {
+      "aabb": 1.0
+    },
+    "aaba": {
+      "abaa": 1.0
+    },
+    "aabc": {
+      "abcc": 1.0
+    },
+    "abcc": {
+      "bccc": 1.0
+    },
+    "bccc": {
+      "cccc": 0.6,
+      "cccb": 0.4
+    },
+    "ccbc": {
+      "cbcc": 1.0
+    },
+    "cbcc": {
+      "bccc": 0.75,
+      "bccb": 0.25
+    },
+    "bccb": {
+      "ccbb": 1.0
+    },
+    "bbbc": {
+      "bbcb": 0.6666666666666666,
+      "bbcc": 0.3333333333333333
+    },
+    "bbcb": {
+      "bcbc": 0.5,
+      "bcbb": 0.5
+    },
+    "bcbc": {
+      "cbcb": 1.0
+    },
+    "cbcb": {
+      "bcbb": 0.6666666666666666,
+      "bcbc": 0.3333333333333333
+    },
+    "bcbb": {
+      "cbbb": 1.0
+    },
+    "bbcc": {
+      "bccb": 0.6666666666666666,
+      "bccc": 0.3333333333333333
+    },
+    "cbbc": {
+      "bbcc": 1.0
+    }
+  }
+}

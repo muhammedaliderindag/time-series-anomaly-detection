@@ -94,6 +94,10 @@ def main():
     print("STARTING EXPERIMENTAL AUTOMATION & SCENARIO TESTING")
     print("=" * 60)
 
+    print("\n>>> INITIALIZATION: Running Feature Engineering & Preprocessing")
+    from src.pipelines.anomaly_detection_pipeline import AnomalyDetectionPipeline
+    AnomalyDetectionPipeline("configs/config.yaml").run_preprocessing()
+
     runner = MultiSeedRunner("configs/config.yaml")
 
     if args.test in ["all", "multiseed"]:
@@ -155,23 +159,21 @@ def main():
     output_dir = None
     if args.test in ["all", "figures"]:
         print("\n>>> STEP 9: Figure Generation")
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        output_dir = os.path.join("figures", timestamp)
+        
         try:
-            from datetime import datetime
-            from src.visualization import generate_figures, generate_prediction_figures
-            
-            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            output_dir = os.path.join("figures", timestamp)
-            
+            from src.visualization import generate_figures
             generate_figures.main(output_dir=output_dir)
-            
-            if args.include_dl or args.dl_smoke_test or os.path.exists("results/dl_experiment_results.csv"):
-                try:
-                    generate_prediction_figures.main(output_dir=output_dir)
-                except Exception as e:
-                    print(f"Warning: Could not generate prediction figures: {e}")
-                    
         except Exception as e:
-            print(f"Warning: Figure generation failed: {e}")
+            print(f"Warning: General figure generation failed: {e}")
+            
+        try:
+            from src.visualization import generate_prediction_figures
+            generate_prediction_figures.main(output_dir=output_dir)
+        except Exception as e:
+            print(f"Warning: Could not generate prediction figures: {e}")
 
     print("\n" + "=" * 60)
     print("ALL REQUESTED EXPERIMENTS COMPLETED SUCCESSFULLY!")

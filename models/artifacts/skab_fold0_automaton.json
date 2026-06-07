@@ -1,0 +1,115 @@
+{
+  "states": [
+    "aaaa",
+    "aaab",
+    "aaac",
+    "aaba",
+    "aabb",
+    "aacc",
+    "abaa",
+    "abab",
+    "abba",
+    "abbb",
+    "accc",
+    "baaa",
+    "baab",
+    "babb",
+    "bbaa",
+    "bbab",
+    "bbba",
+    "bbbb",
+    "cbaa",
+    "cbbb",
+    "ccba",
+    "ccbb",
+    "cccb",
+    "cccc"
+  ],
+  "transition_matrix": {
+    "cccc": {
+      "cccc": 0.9977728285077951,
+      "cccb": 0.0022271714922048997
+    },
+    "cccb": {
+      "ccbb": 0.5,
+      "ccba": 0.5
+    },
+    "ccbb": {
+      "cbbb": 1.0
+    },
+    "cbbb": {
+      "bbbb": 1.0
+    },
+    "bbbb": {
+      "bbbb": 0.9846938775510204,
+      "bbba": 0.015306122448979591
+    },
+    "bbba": {
+      "bbaa": 0.8,
+      "bbab": 0.2
+    },
+    "bbaa": {
+      "baaa": 1.0
+    },
+    "baaa": {
+      "aaaa": 1.0
+    },
+    "aaaa": {
+      "aaaa": 0.990188679245283,
+      "aaab": 0.009056603773584906,
+      "aaac": 0.0007547169811320754
+    },
+    "aaab": {
+      "aabb": 0.5,
+      "aaba": 0.5
+    },
+    "aabb": {
+      "abbb": 0.7142857142857143,
+      "abba": 0.2857142857142857
+    },
+    "abbb": {
+      "bbbb": 0.8888888888888888,
+      "bbba": 0.1111111111111111
+    },
+    "aaba": {
+      "abaa": 0.875,
+      "abab": 0.125
+    },
+    "abaa": {
+      "baab": 0.42857142857142855,
+      "baaa": 0.5714285714285714
+    },
+    "baab": {
+      "aabb": 0.3333333333333333,
+      "aaba": 0.6666666666666666
+    },
+    "abba": {
+      "bbaa": 0.5,
+      "bbab": 0.5
+    },
+    "abab": {
+      "babb": 1.0
+    },
+    "babb": {
+      "abbb": 1.0
+    },
+    "bbab": {
+      "babb": 1.0
+    },
+    "aaac": {
+      "aacc": 1.0
+    },
+    "aacc": {
+      "accc": 1.0
+    },
+    "accc": {
+      "cccc": 1.0
+    },
+    "ccba": {
+      "cbaa": 1.0
+    },
+    "cbaa": {
+      "baaa": 1.0
+    }
+  }
+}

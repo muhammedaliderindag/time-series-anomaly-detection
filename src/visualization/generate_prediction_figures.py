@@ -114,13 +114,16 @@ def collect_predictions(
         for fold_dir, fold_idx in dataset_dirs:
             print(f"[Inference] dataset={dataset_name}, model={model_name}, seed={seed}, fold={fold_idx}")
 
-            model = load_checkpoint_model(
-                runner=runner,
-                dataset_name=dataset_name,
-                model_name=model_name,
-                seed=seed,
-                fold_idx=fold_idx
-            )
+            try:
+                model = load_checkpoint_model(
+                    runner=runner,
+                    dataset_name=dataset_name,
+                    model_name=model_name,
+                    seed=seed,
+                    fold_idx=fold_idx
+                )
+            except FileNotFoundError:
+                continue
 
             test_pca, y_true = load_test_data_and_labels(runner, fold_dir)
 

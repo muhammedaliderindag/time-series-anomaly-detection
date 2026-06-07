@@ -1,0 +1,542 @@
+2026-06-06 21:52:25 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:25 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:25 | INFO     | Starting preprocessing step...
+2026-06-06 21:52:27 | INFO     | Preprocessing complete.
+2026-06-06 21:52:27 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:27 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:27 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:52:27 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:52:27 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:52:27 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:27 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:27 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:52:28 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:52:28 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:52:28 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:28 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:28 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:52:28 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:52:28 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:52:28 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:28 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:28 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:52:29 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:52:29 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:52:29 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:29 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:29 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:52:29 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:52:29 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:52:29 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:29 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:29 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:52:29 | INFO     | --- BATADAL ---
+2026-06-06 21:52:29 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:52:29 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:29 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:29 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:52:29 | INFO     | --- BATADAL ---
+2026-06-06 21:52:29 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:52:29 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:29 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:29 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:52:29 | INFO     | --- BATADAL ---
+2026-06-06 21:52:29 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:52:29 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:29 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:29 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:52:29 | INFO     | --- BATADAL ---
+2026-06-06 21:52:29 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:52:29 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:29 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:29 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:52:29 | INFO     | --- BATADAL ---
+2026-06-06 21:52:29 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:52:39 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:39 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:39 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:52:40 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:52:40 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:52:40 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:52:40 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:40 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:52:40 | INFO     | --- BATADAL ---
+2026-06-06 21:52:40 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:53:54 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:53:54 | INFO     | Log directory: /app/logs
+2026-06-06 21:53:54 | INFO     | Starting preprocessing step...
+2026-06-06 21:53:55 | INFO     | Preprocessing complete.
+2026-06-06 21:53:55 | INFO     | Timer 'total_experiment_time' started.
+2026-06-06 21:53:55 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:53:56 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:53:56 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:53:56 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:53:56 | INFO     | --- BATADAL ---
+2026-06-06 21:53:56 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:53:56 | INFO     | Timer 'total_experiment_time' stopped. Elapsed: 0.5462s
+2026-06-06 21:54:07 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:07 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:07 | INFO     | Starting preprocessing step...
+2026-06-06 21:54:08 | INFO     | Preprocessing complete.
+2026-06-06 21:54:08 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:08 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:08 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:54:09 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:54:09 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:54:09 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:09 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:09 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:54:09 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:54:09 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:54:09 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:09 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:09 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:54:10 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:54:10 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:54:10 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:10 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:10 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:54:10 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:54:10 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:54:10 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:10 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:10 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:54:11 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:54:11 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:54:11 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:11 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:11 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:54:11 | INFO     | --- BATADAL ---
+2026-06-06 21:54:11 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:54:11 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:11 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:11 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:54:11 | INFO     | --- BATADAL ---
+2026-06-06 21:54:11 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:54:11 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:11 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:11 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:54:11 | INFO     | --- BATADAL ---
+2026-06-06 21:54:11 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:54:11 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:11 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:11 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:54:11 | INFO     | --- BATADAL ---
+2026-06-06 21:54:11 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:54:11 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:11 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:11 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:54:11 | INFO     | --- BATADAL ---
+2026-06-06 21:54:11 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:54:21 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:21 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:21 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:54:21 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:54:21 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:54:21 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:54:21 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:21 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:54:21 | INFO     | --- BATADAL ---
+2026-06-06 21:54:21 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:55:29 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:29 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:29 | INFO     | Starting preprocessing step...
+2026-06-06 21:55:30 | INFO     | Preprocessing complete.
+2026-06-06 21:55:30 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:30 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:30 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:55:30 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:55:30 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:55:31 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:31 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:31 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:55:31 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:55:31 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:55:31 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:31 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:31 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:55:31 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:55:31 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:55:31 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:31 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:31 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:55:32 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:55:32 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:55:32 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:32 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:32 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 21:55:32 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 21:55:32 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 21:55:32 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:32 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:32 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:55:33 | INFO     | --- BATADAL ---
+2026-06-06 21:55:33 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:55:33 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:33 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:33 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:55:33 | INFO     | --- BATADAL ---
+2026-06-06 21:55:33 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:55:33 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:33 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:33 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:55:33 | INFO     | --- BATADAL ---
+2026-06-06 21:55:33 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:55:33 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:33 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:33 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:55:33 | INFO     | --- BATADAL ---
+2026-06-06 21:55:33 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 21:55:33 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 21:55:33 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:33 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 21:55:33 | INFO     | --- BATADAL ---
+2026-06-06 21:55:33 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:00:58 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:00:58 | INFO     | Log directory: /app/logs
+2026-06-06 23:00:58 | INFO     | Starting preprocessing step...
+2026-06-06 23:00:59 | INFO     | Preprocessing complete.
+2026-06-06 23:00:59 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:00:59 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:00 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:00 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:00 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:00 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:00 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:00 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:01 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:01 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:01 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:01 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:01 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:01 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:01 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:01 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:01 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:01 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:02 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:02 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:02 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:02 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:02 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:02 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:02 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:02 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:02 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:02 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:02 | INFO     | --- BATADAL ---
+2026-06-06 23:01:02 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:02 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:02 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:02 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:02 | INFO     | --- BATADAL ---
+2026-06-06 23:01:02 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:02 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:02 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:02 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:02 | INFO     | --- BATADAL ---
+2026-06-06 23:01:02 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:02 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:02 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:02 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:03 | INFO     | --- BATADAL ---
+2026-06-06 23:01:03 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:03 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:03 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:03 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:03 | INFO     | --- BATADAL ---
+2026-06-06 23:01:03 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:12 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:12 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:12 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:13 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:13 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:13 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:13 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:13 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:13 | INFO     | --- BATADAL ---
+2026-06-06 23:01:13 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:53 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:53 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:53 | INFO     | Starting preprocessing step...
+2026-06-06 23:01:54 | INFO     | Preprocessing complete.
+2026-06-06 23:01:54 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:54 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:54 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:54 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:54 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:54 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:54 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:54 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:55 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:55 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:55 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:55 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:55 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:55 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:55 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:55 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:55 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:55 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:56 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:56 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:56 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:01:56 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:01:56 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:01:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:56 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:56 | INFO     | --- BATADAL ---
+2026-06-06 23:01:56 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:56 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:57 | INFO     | --- BATADAL ---
+2026-06-06 23:01:57 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:57 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:57 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:57 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:57 | INFO     | --- BATADAL ---
+2026-06-06 23:01:57 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:57 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:57 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:57 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:57 | INFO     | --- BATADAL ---
+2026-06-06 23:01:57 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:01:57 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:01:57 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:57 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:01:57 | INFO     | --- BATADAL ---
+2026-06-06 23:01:57 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:02:40 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:02:40 | INFO     | Log directory: /app/logs
+2026-06-06 23:02:40 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:02:41 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:02:41 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:02:41 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:02:41 | INFO     | Log directory: /app/logs
+2026-06-06 23:02:41 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:02:41 | INFO     | --- BATADAL ---
+2026-06-06 23:02:41 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:06:40 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:06:40 | INFO     | Log directory: /app/logs
+2026-06-06 23:06:40 | INFO     | Starting preprocessing step...
+2026-06-06 23:06:41 | INFO     | Preprocessing complete.
+2026-06-06 23:08:52 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:52 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:52 | INFO     | Starting preprocessing step...
+2026-06-06 23:08:53 | INFO     | Preprocessing complete.
+2026-06-06 23:08:54 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:54 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:54 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:08:54 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:08:54 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:08:54 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:54 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:54 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:08:54 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:08:54 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:08:55 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:55 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:55 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:08:55 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:08:55 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:08:55 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:55 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:55 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:08:55 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:08:55 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:08:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:56 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:08:56 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:08:56 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:08:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:56 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:08:56 | INFO     | --- BATADAL ---
+2026-06-06 23:08:56 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:08:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:56 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:08:56 | INFO     | --- BATADAL ---
+2026-06-06 23:08:56 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:08:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:56 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:08:56 | INFO     | --- BATADAL ---
+2026-06-06 23:08:56 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:08:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:56 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:08:56 | INFO     | --- BATADAL ---
+2026-06-06 23:08:56 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:08:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:08:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:56 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:08:56 | INFO     | --- BATADAL ---
+2026-06-06 23:08:56 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:09:39 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:09:39 | INFO     | Log directory: /app/logs
+2026-06-06 23:09:39 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:09:40 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:09:40 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:09:40 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:09:40 | INFO     | Log directory: /app/logs
+2026-06-06 23:09:40 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:09:40 | INFO     | --- BATADAL ---
+2026-06-06 23:09:40 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:11:35 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:11:35 | INFO     | Log directory: /app/logs
+2026-06-06 23:11:35 | INFO     | Starting preprocessing step...
+2026-06-06 23:11:36 | INFO     | Preprocessing complete.
+2026-06-06 23:13:56 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:56 | INFO     | Starting preprocessing step...
+2026-06-06 23:13:57 | INFO     | Preprocessing complete.
+2026-06-06 23:13:57 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:57 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:57 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:13:57 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:13:57 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:13:57 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:57 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:57 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:13:58 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:13:58 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:13:58 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:58 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:58 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:13:58 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:13:58 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:13:58 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:58 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:58 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:13:59 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:13:59 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:13:59 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:59 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:59 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-06 23:13:59 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-06 23:13:59 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-06 23:13:59 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:59 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:59 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:13:59 | INFO     | --- BATADAL ---
+2026-06-06 23:13:59 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:13:59 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:59 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:59 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:13:59 | INFO     | --- BATADAL ---
+2026-06-06 23:13:59 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:13:59 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:59 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:59 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:13:59 | INFO     | --- BATADAL ---
+2026-06-06 23:13:59 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:13:59 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:59 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:59 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:13:59 | INFO     | --- BATADAL ---
+2026-06-06 23:13:59 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-06 23:13:59 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-06 23:13:59 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:59 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-06 23:14:00 | INFO     | --- BATADAL ---
+2026-06-06 23:14:00 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703
+2026-06-07 00:59:36 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-07 00:59:36 | INFO     | Log directory: /app/logs
+2026-06-07 00:59:36 | INFO     | 
+RUNNING PIPELINE FOR: SKAB
+2026-06-07 00:59:37 | INFO     | --- SKAB (Avg over 5 folds) ---
+2026-06-07 00:59:37 | INFO     | Accuracy: 0.6310 +/- 0.0101, F1: 0.0236 +/- 0.0156
+2026-06-07 00:59:37 | INFO     | Logger initialized for experiment: automata_experiment
+2026-06-07 00:59:37 | INFO     | Log directory: /app/logs
+2026-06-07 00:59:37 | INFO     | 
+RUNNING PIPELINE FOR: BATADAL
+2026-06-07 00:59:37 | INFO     | --- BATADAL ---
+2026-06-07 00:59:37 | INFO     | Accuracy: 0.8354, Precision: 0.3571, Recall: 0.2174, F1: 0.2703

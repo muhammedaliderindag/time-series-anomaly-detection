@@ -1,0 +1,200 @@
+2026-06-06 21:52:25 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 21:52:25 | INFO     | Log directory: /app/logs
+2026-06-06 21:52:25 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 21:52:25 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 21:52:26 | INFO     | Processing SKAB Fold 0...
+2026-06-06 21:52:26 | INFO     | Processing SKAB Fold 1...
+2026-06-06 21:52:26 | INFO     | Processing SKAB Fold 2...
+2026-06-06 21:52:26 | INFO     | Processing SKAB Fold 3...
+2026-06-06 21:52:26 | INFO     | Processing SKAB Fold 4...
+2026-06-06 21:52:26 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 21:52:27 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.2066s
+2026-06-06 21:52:27 | INFO     | Pipeline Execution Complete.
+2026-06-06 21:52:27 | INFO     | ============================================================
+2026-06-06 21:52:27 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 21:52:27 | INFO     | ============================================================
+2026-06-06 21:52:27 | INFO     | Experiment: data_preprocessing
+2026-06-06 21:52:27 | INFO     | Total metric entries: 0
+2026-06-06 21:52:27 | INFO     | Recorded times:
+2026-06-06 21:52:27 | INFO     |   total_preprocessing_time: 1.2066s
+2026-06-06 21:52:27 | INFO     | ============================================================
+2026-06-06 21:53:54 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 21:53:54 | INFO     | Log directory: /app/logs
+2026-06-06 21:53:54 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 21:53:54 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 21:53:54 | INFO     | Processing SKAB Fold 0...
+2026-06-06 21:53:55 | INFO     | Processing SKAB Fold 1...
+2026-06-06 21:53:55 | INFO     | Processing SKAB Fold 2...
+2026-06-06 21:53:55 | INFO     | Processing SKAB Fold 3...
+2026-06-06 21:53:55 | INFO     | Processing SKAB Fold 4...
+2026-06-06 21:53:55 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 21:53:55 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.1226s
+2026-06-06 21:53:55 | INFO     | Pipeline Execution Complete.
+2026-06-06 21:53:55 | INFO     | ============================================================
+2026-06-06 21:53:55 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 21:53:55 | INFO     | ============================================================
+2026-06-06 21:53:55 | INFO     | Experiment: data_preprocessing
+2026-06-06 21:53:55 | INFO     | Total metric entries: 0
+2026-06-06 21:53:55 | INFO     | Recorded times:
+2026-06-06 21:53:55 | INFO     |   total_preprocessing_time: 1.1226s
+2026-06-06 21:53:55 | INFO     | ============================================================
+2026-06-06 21:54:07 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 21:54:07 | INFO     | Log directory: /app/logs
+2026-06-06 21:54:07 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 21:54:07 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 21:54:07 | INFO     | Processing SKAB Fold 0...
+2026-06-06 21:54:08 | INFO     | Processing SKAB Fold 1...
+2026-06-06 21:54:08 | INFO     | Processing SKAB Fold 2...
+2026-06-06 21:54:08 | INFO     | Processing SKAB Fold 3...
+2026-06-06 21:54:08 | INFO     | Processing SKAB Fold 4...
+2026-06-06 21:54:08 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 21:54:08 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.1162s
+2026-06-06 21:54:08 | INFO     | Pipeline Execution Complete.
+2026-06-06 21:54:08 | INFO     | ============================================================
+2026-06-06 21:54:08 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 21:54:08 | INFO     | ============================================================
+2026-06-06 21:54:08 | INFO     | Experiment: data_preprocessing
+2026-06-06 21:54:08 | INFO     | Total metric entries: 0
+2026-06-06 21:54:08 | INFO     | Recorded times:
+2026-06-06 21:54:08 | INFO     |   total_preprocessing_time: 1.1162s
+2026-06-06 21:54:08 | INFO     | ============================================================
+2026-06-06 21:55:29 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 21:55:29 | INFO     | Log directory: /app/logs
+2026-06-06 21:55:29 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 21:55:29 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 21:55:29 | INFO     | Processing SKAB Fold 0...
+2026-06-06 21:55:29 | INFO     | Processing SKAB Fold 1...
+2026-06-06 21:55:29 | INFO     | Processing SKAB Fold 2...
+2026-06-06 21:55:30 | INFO     | Processing SKAB Fold 3...
+2026-06-06 21:55:30 | INFO     | Processing SKAB Fold 4...
+2026-06-06 21:55:30 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 21:55:30 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.0400s
+2026-06-06 21:55:30 | INFO     | Pipeline Execution Complete.
+2026-06-06 21:55:30 | INFO     | ============================================================
+2026-06-06 21:55:30 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 21:55:30 | INFO     | ============================================================
+2026-06-06 21:55:30 | INFO     | Experiment: data_preprocessing
+2026-06-06 21:55:30 | INFO     | Total metric entries: 0
+2026-06-06 21:55:30 | INFO     | Recorded times:
+2026-06-06 21:55:30 | INFO     |   total_preprocessing_time: 1.0400s
+2026-06-06 21:55:30 | INFO     | ============================================================
+2026-06-06 23:00:58 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 23:00:58 | INFO     | Log directory: /app/logs
+2026-06-06 23:00:58 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 23:00:58 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 23:00:58 | INFO     | Processing SKAB Fold 0...
+2026-06-06 23:00:58 | INFO     | Processing SKAB Fold 1...
+2026-06-06 23:00:59 | INFO     | Processing SKAB Fold 2...
+2026-06-06 23:00:59 | INFO     | Processing SKAB Fold 3...
+2026-06-06 23:00:59 | INFO     | Processing SKAB Fold 4...
+2026-06-06 23:00:59 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 23:00:59 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.9174s
+2026-06-06 23:00:59 | INFO     | Pipeline Execution Complete.
+2026-06-06 23:00:59 | INFO     | ============================================================
+2026-06-06 23:00:59 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 23:00:59 | INFO     | ============================================================
+2026-06-06 23:00:59 | INFO     | Experiment: data_preprocessing
+2026-06-06 23:00:59 | INFO     | Total metric entries: 0
+2026-06-06 23:00:59 | INFO     | Recorded times:
+2026-06-06 23:00:59 | INFO     |   total_preprocessing_time: 1.9174s
+2026-06-06 23:00:59 | INFO     | ============================================================
+2026-06-06 23:01:53 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 23:01:53 | INFO     | Log directory: /app/logs
+2026-06-06 23:01:53 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 23:01:53 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 23:01:53 | INFO     | Processing SKAB Fold 0...
+2026-06-06 23:01:53 | INFO     | Processing SKAB Fold 1...
+2026-06-06 23:01:53 | INFO     | Processing SKAB Fold 2...
+2026-06-06 23:01:54 | INFO     | Processing SKAB Fold 3...
+2026-06-06 23:01:54 | INFO     | Processing SKAB Fold 4...
+2026-06-06 23:01:54 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 23:01:54 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.0292s
+2026-06-06 23:01:54 | INFO     | Pipeline Execution Complete.
+2026-06-06 23:01:54 | INFO     | ============================================================
+2026-06-06 23:01:54 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 23:01:54 | INFO     | ============================================================
+2026-06-06 23:01:54 | INFO     | Experiment: data_preprocessing
+2026-06-06 23:01:54 | INFO     | Total metric entries: 0
+2026-06-06 23:01:54 | INFO     | Recorded times:
+2026-06-06 23:01:54 | INFO     |   total_preprocessing_time: 1.0292s
+2026-06-06 23:01:54 | INFO     | ============================================================
+2026-06-06 23:06:40 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 23:06:40 | INFO     | Log directory: /app/logs
+2026-06-06 23:06:40 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 23:06:40 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 23:06:40 | INFO     | Processing SKAB Fold 0...
+2026-06-06 23:06:41 | INFO     | Processing SKAB Fold 1...
+2026-06-06 23:06:41 | INFO     | Processing SKAB Fold 2...
+2026-06-06 23:06:41 | INFO     | Processing SKAB Fold 3...
+2026-06-06 23:06:41 | INFO     | Processing SKAB Fold 4...
+2026-06-06 23:06:41 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 23:06:41 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.1342s
+2026-06-06 23:06:41 | INFO     | Pipeline Execution Complete.
+2026-06-06 23:06:41 | INFO     | ============================================================
+2026-06-06 23:06:41 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 23:06:41 | INFO     | ============================================================
+2026-06-06 23:06:41 | INFO     | Experiment: data_preprocessing
+2026-06-06 23:06:41 | INFO     | Total metric entries: 0
+2026-06-06 23:06:41 | INFO     | Recorded times:
+2026-06-06 23:06:41 | INFO     |   total_preprocessing_time: 1.1342s
+2026-06-06 23:06:41 | INFO     | ============================================================
+2026-06-06 23:08:52 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 23:08:52 | INFO     | Log directory: /app/logs
+2026-06-06 23:08:52 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 23:08:52 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 23:08:53 | INFO     | Processing SKAB Fold 0...
+2026-06-06 23:08:53 | INFO     | Processing SKAB Fold 1...
+2026-06-06 23:08:53 | INFO     | Processing SKAB Fold 2...
+2026-06-06 23:08:53 | INFO     | Processing SKAB Fold 3...
+2026-06-06 23:08:53 | INFO     | Processing SKAB Fold 4...
+2026-06-06 23:08:53 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 23:08:53 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.0495s
+2026-06-06 23:08:53 | INFO     | Pipeline Execution Complete.
+2026-06-06 23:08:53 | INFO     | ============================================================
+2026-06-06 23:08:53 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 23:08:53 | INFO     | ============================================================
+2026-06-06 23:08:53 | INFO     | Experiment: data_preprocessing
+2026-06-06 23:08:53 | INFO     | Total metric entries: 0
+2026-06-06 23:08:53 | INFO     | Recorded times:
+2026-06-06 23:08:53 | INFO     |   total_preprocessing_time: 1.0495s
+2026-06-06 23:08:53 | INFO     | ============================================================
+2026-06-06 23:11:35 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 23:11:35 | INFO     | Log directory: /app/logs
+2026-06-06 23:11:35 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 23:11:35 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 23:11:35 | INFO     | Processing SKAB Fold 0...
+2026-06-06 23:11:35 | INFO     | Processing SKAB Fold 1...
+2026-06-06 23:11:35 | INFO     | Processing SKAB Fold 2...
+2026-06-06 23:11:35 | INFO     | Processing SKAB Fold 3...
+2026-06-06 23:11:35 | INFO     | Processing SKAB Fold 4...
+2026-06-06 23:11:35 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 23:11:36 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.0122s
+2026-06-06 23:11:36 | INFO     | Pipeline Execution Complete.
+2026-06-06 23:11:36 | INFO     | ============================================================
+2026-06-06 23:11:36 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 23:11:36 | INFO     | ============================================================
+2026-06-06 23:11:36 | INFO     | Experiment: data_preprocessing
+2026-06-06 23:11:36 | INFO     | Total metric entries: 0
+2026-06-06 23:11:36 | INFO     | Recorded times:
+2026-06-06 23:11:36 | INFO     |   total_preprocessing_time: 1.0122s
+2026-06-06 23:11:36 | INFO     | ============================================================
+2026-06-06 23:13:56 | INFO     | Logger initialized for experiment: data_preprocessing
+2026-06-06 23:13:56 | INFO     | Log directory: /app/logs
+2026-06-06 23:13:56 | INFO     | Timer 'total_preprocessing_time' started.
+2026-06-06 23:13:56 | INFO     | Starting preprocessing pipeline for SKAB (K-Fold)
+2026-06-06 23:13:56 | INFO     | Processing SKAB Fold 0...
+2026-06-06 23:13:56 | INFO     | Processing SKAB Fold 1...
+2026-06-06 23:13:56 | INFO     | Processing SKAB Fold 2...
+2026-06-06 23:13:56 | INFO     | Processing SKAB Fold 3...
+2026-06-06 23:13:56 | INFO     | Processing SKAB Fold 4...
+2026-06-06 23:13:57 | INFO     | Starting preprocessing pipeline for BATADAL
+2026-06-06 23:13:57 | INFO     | Timer 'total_preprocessing_time' stopped. Elapsed: 1.0434s
+2026-06-06 23:13:57 | INFO     | Pipeline Execution Complete.
+2026-06-06 23:13:57 | INFO     | ============================================================
+2026-06-06 23:13:57 | INFO     | EXPERIMENT SUMMARY
+2026-06-06 23:13:57 | INFO     | ============================================================
+2026-06-06 23:13:57 | INFO     | Experiment: data_preprocessing
+2026-06-06 23:13:57 | INFO     | Total metric entries: 0
+2026-06-06 23:13:57 | INFO     | Recorded times:
+2026-06-06 23:13:57 | INFO     |   total_preprocessing_time: 1.0434s
+2026-06-06 23:13:57 | INFO     | ============================================================

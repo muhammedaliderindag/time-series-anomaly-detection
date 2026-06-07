@@ -1,0 +1,146 @@
+{
+  "states": [
+    "aaaa",
+    "aaab",
+    "aaba",
+    "aabb",
+    "aabc",
+    "abaa",
+    "abab",
+    "abba",
+    "abbb",
+    "abcc",
+    "baaa",
+    "baab",
+    "baba",
+    "babb",
+    "bbaa",
+    "bbab",
+    "bbba",
+    "bbbb",
+    "bbbc",
+    "bbcb",
+    "bbcc",
+    "bcbb",
+    "bcbc",
+    "bccb",
+    "bccc",
+    "cbbb",
+    "cbbc",
+    "cbcc",
+    "ccbb",
+    "cccb",
+    "cccc"
+  ],
+  "transition_matrix": {
+    "cccc": {
+      "cccc": 0.995,
+      "cccb": 0.005
+    },
+    "cccb": {
+      "ccbb": 1.0
+    },
+    "ccbb": {
+      "cbbb": 0.8333333333333334,
+      "cbbc": 0.16666666666666666
+    },
+    "cbbb": {
+      "bbbb": 0.875,
+      "bbbc": 0.125
+    },
+    "bbbb": {
+      "bbbb": 0.9761904761904762,
+      "bbba": 0.013888888888888888,
+      "bbbc": 0.00992063492063492
+    },
+    "bbba": {
+      "bbab": 0.2857142857142857,
+      "bbaa": 0.7142857142857143
+    },
+    "bbab": {
+      "babb": 1.0
+    },
+    "babb": {
+      "abba": 0.5,
+      "abbb": 0.5
+    },
+    "abba": {
+      "bbaa": 1.0
+    },
+    "bbaa": {
+      "baaa": 1.0
+    },
+    "baaa": {
+      "aaaa": 0.75,
+      "aaab": 0.25
+    },
+    "aaaa": {
+      "aaaa": 0.9961890243902439,
+      "aaab": 0.0038109756097560975
+    },
+    "aaab": {
+      "aabb": 0.5714285714285714,
+      "aaba": 0.2857142857142857,
+      "aabc": 0.14285714285714285
+    },
+    "aabb": {
+      "abbb": 1.0
+    },
+    "abbb": {
+      "bbbb": 1.0
+    },
+    "aaba": {
+      "abaa": 0.6666666666666666,
+      "abab": 0.3333333333333333
+    },
+    "abaa": {
+      "baaa": 0.6666666666666666,
+      "baab": 0.3333333333333333
+    },
+    "baab": {
+      "aaba": 1.0
+    },
+    "abab": {
+      "baba": 1.0
+    },
+    "baba": {
+      "abaa": 1.0
+    },
+    "aabc": {
+      "abcc": 1.0
+    },
+    "abcc": {
+      "bccc": 1.0
+    },
+    "bccc": {
+      "cccc": 1.0
+    },
+    "bbbc": {
+      "bbcb": 0.8333333333333334,
+      "bbcc": 0.16666666666666666
+    },
+    "bbcb": {
+      "bcbc": 0.4,
+      "bcbb": 0.6
+    },
+    "bcbc": {
+      "cbcc": 1.0
+    },
+    "cbcc": {
+      "bccc": 1.0
+    },
+    "cbbc": {
+      "bbcc": 1.0
+    },
+    "bbcc": {
+      "bccc": 0.5,
+      "bccb": 0.5
+    },
+    "bcbb": {
+      "cbbb": 1.0
+    },
+    "bccb": {
+      "ccbb": 1.0
+    }
+  }
+}

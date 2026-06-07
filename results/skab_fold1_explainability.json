@@ -9,8 +9,8 @@
   },
   "summary": {
     "path_probability": 0.0,
-    "confidence_score": 0.9705431421763882,
-    "mean_transition_probability": 0.9705431421763882,
+    "confidence_score": 0.9705431421763783,
+    "mean_transition_probability": 0.9705431421763783,
     "min_transition_probability": 0.0,
     "zero_probability_transitions": 1,
     "final_decision": "anomaly",
