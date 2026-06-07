@@ -553,11 +553,11 @@ Gaussian noise deneylerinde kullanılan standart sapma değerleri: **0.05, 0.1, 
 
 | Dataset | Model | Accuracy Mean | Accuracy Std | F1 Mean | F1 Std |
 |---|---|---:|---:|---:|---:|
-| BATADAL | 1D-CNN | 0.7536 | 0.0373 | 0.6276 | 0.0313 |
-| BATADAL | LSTM | 0.6630 | 0.0153 | 0.2197 | 0.0746 |
+| BATADAL | 1D-CNN | 0.7512 | 0.0167 | 0.5191 | 0.0553 |
+| BATADAL | LSTM | 0.6293 | 0.0038 | 0.0447 | 0.0142 |
 | BATADAL | Automata | 0.8354 | 0.0000 | 0.2703 | 0.0000 |
-| SKAB | 1D-CNN | 0.5384 | 0.0181 | 0.0843 | 0.1447 |
-| SKAB | LSTM | 0.5266 | 0.0601 | 0.1409 | 0.1672 |
+| SKAB | 1D-CNN | 0.5425 | 0.0173 | 0.1019 | 0.1438 |
+| SKAB | LSTM | 0.5270 | 0.0611 | 0.1455 | 0.1721 |
 | SKAB | Automata | 0.6310 | 0.0000 | 0.0236 | 0.0000 |
 
 BATADAL veri setinde en yüksek F1-score değeri **1D-CNN** modeli tarafından elde edilmiştir. SKAB veri setinde ise **LSTM** modeli daha yüksek F1-score üretmiştir.
@@ -627,12 +627,12 @@ Tüm unseen pattern'ların Levenshtein edit distance kullanılarak en yakın sta
 
 | Dataset | Model | Training Time Mean (s) | Training Time Std | Inference Time Mean (s) | Accuracy | F1 |
 |---|---|---:|---:|---:|---:|---:|
-| SKAB | Automata | 0.36 | 0.00 | 0.00 | 0.6310 | 0.0236 |
-| BATADAL | Automata | 0.04 | 0.00 | 0.00 | 0.8354 | 0.2703 |
-| BATADAL | 1D-CNN | 86.90 | 17.85 | 0.61 | 0.7536 | 0.6276 |
-| BATADAL | LSTM | 242.65 | 64.56 | 1.01 | 0.6630 | 0.2197 |
-| SKAB | 1D-CNN | 164.89 | 101.91 | 2.29 | 0.5384 | 0.0843 |
-| SKAB | LSTM | 518.95 | 221.38 | 7.64 | 0.5266 | 0.1409 |
+| SKAB | Automata | 0.90 | 0.00 | 0.00 | 0.6310 | 0.0236 |
+| BATADAL | Automata | 0.10 | 0.00 | 0.00 | 0.8354 | 0.2703 |
+| BATADAL | 1D-CNN | 13.06 | 0.21 | 0.27 | 0.7512 | 0.5191 |
+| BATADAL | LSTM | 40.11 | 1.84 | 0.94 | 0.6293 | 0.0447 |
+| SKAB | 1D-CNN | 63.49 | 12.85 | 1.46 | 0.5425 | 0.1019 |
+| SKAB | LSTM | 171.77 | 35.83 | 5.34 | 0.5270 | 0.1455 |
 
 Automata modeli, derin öğrenme modellerine göre **~100-1400x daha hızlı** eğitim süresine sahiptir.
 
@@ -642,12 +642,12 @@ Automata modeli, derin öğrenme modellerine göre **~100-1400x daha hızlı** e
 
 | Dataset | Model A | Model B | N Pairs | Statistic | P-value | Significant (α=0.05) |
 |---|---|---|---:|---:|---:|---|
-| SKAB | LSTM | 1D-CNN | 25 | 38.0 | 0.1208 | Hayır |
+| SKAB | LSTM | 1D-CNN | 25 | 64.0 | 0.3491 | Hayır |
 | SKAB | Automata | 1D-CNN | 5 | 0.0 | 0.0625 | Hayır |
 | SKAB | Automata | LSTM | 5 | 0.0 | 0.0625 | Hayır |
 | BATADAL | LSTM | 1D-CNN | 5 | 0.0 | 0.0625 | Hayır |
 | BATADAL | Automata | 1D-CNN | 5 | 0.0 | 0.0625 | Hayır |
-| BATADAL | Automata | LSTM | 5 | 3.0 | 0.3125 | Hayır |
+| BATADAL | Automata | LSTM | 5 | 0.0 | 0.0625 | Hayır |
 
 ---
 
@@ -655,41 +655,41 @@ Automata modeli, derin öğrenme modellerine göre **~100-1400x daha hızlı** e
 
 ### 14.1 Confusion Matrix
 
-![BATADAL CNN Confusion Matrix](figures/confusion_matrix_batadal_cnn.png)
+![BATADAL CNN Confusion Matrix](figures/2026-06-07_00-59-37/confusion_matrix_batadal_cnn.png)
 
-![SKAB LSTM Confusion Matrix](figures/confusion_matrix_skab_lstm.png)
+![SKAB LSTM Confusion Matrix](figures/2026-06-07_00-59-37/confusion_matrix_skab_lstm.png)
 
 ### 14.2 Precision-Recall Eğrisi
 
-![BATADAL CNN Precision-Recall Curve](figures/pr_curve_batadal_cnn.png)
+![BATADAL CNN Precision-Recall Curve](figures/2026-06-07_00-59-37/pr_curve_batadal_cnn.png)
 
-![SKAB LSTM Precision-Recall Curve](figures/pr_curve_skab_lstm.png)
+![SKAB LSTM Precision-Recall Curve](figures/2026-06-07_00-59-37/pr_curve_skab_lstm.png)
 
 ### 14.3 Automata State Diagram
 
-![BATADAL Automata State Diagram](figures/automata_state_diagram_batadal_fold0.png)
+![BATADAL Automata State Diagram](figures/2026-06-07_00-59-37/automata_state_diagram_batadal_fold0.png)
 
-![SKAB Automata State Diagram](figures/automata_state_diagram_skab_fold0.png)
+![SKAB Automata State Diagram](figures/2026-06-07_00-59-37/automata_state_diagram_skab_fold0.png)
 
 ### 14.4 Transition Probability Heatmap
 
-![BATADAL Transition Probability Heatmap](figures/transition_probability_heatmap_batadal_fold0.png)
+![BATADAL Transition Probability Heatmap](figures/2026-06-07_00-59-37/transition_probability_heatmap_batadal_fold0.png)
 
-![SKAB Transition Probability Heatmap](figures/transition_probability_heatmap_skab_fold0.png)
+![SKAB Transition Probability Heatmap](figures/2026-06-07_00-59-37/transition_probability_heatmap_skab_fold0.png)
 
 ### 14.5 Parametre Duyarlılık Grafikleri
 
-![BATADAL Parameter Sensitivity F1](figures/batadal_parameter_sensitivity_f1.png)
+![BATADAL Parameter Sensitivity F1](figures/2026-06-07_00-59-37/batadal_parameter_sensitivity_f1.png)
 
-![SKAB Parameter Sensitivity F1](figures/skab_parameter_sensitivity_f1.png)
+![SKAB Parameter Sensitivity F1](figures/2026-06-07_00-59-37/skab_parameter_sensitivity_f1.png)
 
-![BATADAL Parameter Sensitivity State Count](figures/batadal_parameter_sensitivity_state_count.png)
+![BATADAL Parameter Sensitivity State Count](figures/2026-06-07_00-59-37/batadal_parameter_sensitivity_state_count.png)
 
-![SKAB Parameter Sensitivity State Count](figures/skab_parameter_sensitivity_state_count.png)
+![SKAB Parameter Sensitivity State Count](figures/2026-06-07_00-59-37/skab_parameter_sensitivity_state_count.png)
 
-![BATADAL Parameter Sensitivity Transition Density](figures/batadal_parameter_sensitivity_transition_density.png)
+![BATADAL Parameter Sensitivity Transition Density](figures/2026-06-07_00-59-37/batadal_parameter_sensitivity_transition_density.png)
 
-![SKAB Parameter Sensitivity Transition Density](figures/skab_parameter_sensitivity_transition_density.png)
+![SKAB Parameter Sensitivity Transition Density](figures/2026-06-07_00-59-37/skab_parameter_sensitivity_transition_density.png)
 
 ---
 
